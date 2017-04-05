@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="779.0" prefWidth="951.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameOfLifeController">
+   <children>
+      <Canvas fx:id="canvas" height="757.0" layoutY="27.0" width="957.0" />
+      <Canvas fx:id="canvasBack" height="757.0" layoutY="27.0" width="957.0" />
+      <Pane fx:id="menu" layoutY="27.0" managed="true" prefHeight="713.0" prefWidth="172.0" visible="true">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6f6f6f" height="712.0" stroke="#434343" strokeType="INSIDE" width="179.0" />
+            <Button layoutX="46.0" layoutY="659.0" mnemonicParsing="false" onAction="#Apply" prefHeight="25.0" prefWidth="80.0" text="Apply" />
+         </children>
+      </Pane>
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="951.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#openMenu" text="Settings" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Button fx:id="clear" layoutX="850.0" layoutY="753.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Clear" onAction="#clearCanvas" />
+      <Button fx:id="start" layoutY="753.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" text="Start" onAction="#start" />
+   </children>
+</AnchorPane>
