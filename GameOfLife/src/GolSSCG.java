@@ -18,8 +18,12 @@ public class GolSSCG extends Application {
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
+        //stage.setMaximized(true);
         stage.show();
+
     }
+
+
 
     /**
      * @param args the command line arguments

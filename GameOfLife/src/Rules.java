@@ -59,21 +59,122 @@ public class Rules {
 
     protected int countNeightbours(int i , int j) {
         connector = 0;
+        //alt i midten
 
-        /*for (int k = -1; k <= 1; k++) {
-            for (int l = -1; l <= 1; l++) {
-                if (!(i+k == -1 && i+k == glc.x && i+l == -1 && i+l == glc.y)){
-                    if (k==0 && l==0){
-                        continue;
+        if (i < glc.x - 1 && i > 0 && j < glc.y - 1 && j > 0) {
+            for (int k = -1; k <= 1; k++) {
+                for (int l = -1; l <= 1; l++) {
+
+                        if (glc.grid[i + k][j + l] == 1) {
+                            connector++;
+                        }
+                }
+            }
+        }
+
+        //øver langside(ikke hjørnene)done
+        else if (i < glc.x && i > 0 && j == 0) {
+            for (int k = -1; k <= 0; k++) {
+                for (int l = 0; l <= 1; l++) {
+                    if (glc.grid[i + k][j + l] == 1) {
+                        connector++;
                     }
-                    if (glc.grid[i+k][j+l]==1){
+
+                }
+            }
+        }
+        //venstre langside(ikke hjørnene)done
+        else if (i == 0 && j < glc.y - 1 && j > 0) {
+            for (int k = 0; k <= 1; k++) {
+                for (int l = -1; l <= 1; l++) {
+                    if (!(i - 1 == -1 && j + 1 == 1)) {
+                        if (glc.grid[i + k][j + l] == 1) {
+                            connector++;
+                        }
+                    }
+                }
+            }
+        }
+
+        //høyre langside(ikke hjørnene)done
+        else if (i == glc.x - 1 && j > 0 && j < glc.y - 1) {
+            for (int k = -1; k <= 0; k++) {
+                for (int l = -1; l <= 1; l++) {
+
+                    if (glc.grid[i + k][j + l] == 1) {
+                        connector++;
+                    }
+
+                }
+            }
+        }
+        //nedre langside(ikke hjørnene)
+        else if (i > 0 && i < glc.x - 1 && j > 0 && j == glc.y + 1) {
+            for (int k = -1; k <= 1; k++) {
+                for (int l = 0; l <= 1; l++) {
+
+                    if (glc.grid[i + k][j + l] == 1) {
                         connector++;
                     }
                 }
             }
         }
-*/
+        //venstre øvre hjørne
+        else if (i == 0 && j == 0) {
+            for (int k = 0; k <= 1; k++) {
+                for (int l = -1; l <= 0; l++) {
+                    if (!(i - 1 == -1 && j + 1 == 1)) {
+                        if (glc.grid[i + k][j + l] == 1) {
+                            connector++;
+                        }
+                    }
+                }
+            }
+        }
+        //høyre øvre hjørne
+        else if (i == glc.x - 1 && j == 0) {
+            for (int k = -1; k <= 0; k++) {
+                for (int l = -1; l <= 0; l++) {
 
+                    if (glc.grid[i + k][j + l] == 1) {
+                        connector++;
+                    }
+                }
+            }
+        }
+
+        //venstre nedre hjørne
+        else if (i == 0 && j == glc.y + 1) {
+            for (int k = 0; k <= 1; k++) {
+                for (int l = 0; l <= 1; l++) {
+
+                    // if (!(i + k == -1 && i + k == glc.x && i + l == -1 && i + l == glc.y)) {
+
+
+                    if (glc.grid[i + k][j + l] == 1) {
+                        connector++;
+                    }
+                }
+            }
+        }
+
+        //høyre nedre hjørne
+        else if (i == glc.x - 1 && j == glc.y - 1) {
+            for (int k = -1; k <= 0; k++) {
+                for (int l = -1; l <= 0; l++) {
+                    if (glc.grid[i + k][j + l] == 1) {
+                        connector++;
+                    }
+                }
+            }
+        }
+    
+
+
+
+
+
+/*
     if (i - 1 !=-1 && (j-1)!=-1 && (i+1)!=glc.x && (j+1)!=glc.y){
 
             if (glc.grid[i - 1][j + 1] == 1 && (i - 1) != -1 && (j + 1) != glc.y) {
@@ -97,8 +198,9 @@ public class Rules {
             if (glc.grid[i - 1][j] == 1 && (i - 1) != -1 && j!=-1 && j!=glc.y) {
                 connector++;
             }
-        }
 
+        }
+    */
 
 
 

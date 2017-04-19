@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -35,6 +36,12 @@ public class GameOfLifeController implements Initializable {
     Button start;
     @FXML
     public Pane menu;
+    @FXML
+    public RadioButton small;
+    @FXML
+    public RadioButton normal;
+    @FXML
+    public RadioButton large;
     private Color[] colors = {Color.RED, Color.ALICEBLUE, Color.BISQUE, Color.MAROON, Color.FIREBRICK, Color.BURLYWOOD, Color.SEAGREEN, Color.CORNSILK,};
     private Color blue = Color.BLUEVIOLET;
     public int intervalPeriod;
@@ -43,11 +50,16 @@ public class GameOfLifeController implements Initializable {
     public Rules rule = new Rules(this);
     public GraphicsContext gc;
     public GraphicsContext gc2;
-    protected int x = 1000;
-    protected int y = 1000;
+    public int x = 1000;
+    public int y = 1000;
+    public int cellSize = 10;
+    public int[][] grid = new int[x][y];
 
-    protected int cellSize = 10;
-    protected int[][] grid = new int[x][y];
+
+
+    public void setCellSize(int cellSize) {
+        this.cellSize = cellSize;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,9 +73,7 @@ public class GameOfLifeController implements Initializable {
         canvasBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //gc.setFill(Color.CRIMSON);
-
-                gc.setFill(new Color(Math.random(), Math.random(), Math.random(), 1));
+                gc.setFill(Color.ORANGE);
                 int x1 = (int) event.getX() / cellSize;
                 int y1 = (int) event.getY() / cellSize;
                 grid[x1][y1] = 1;
@@ -74,7 +84,7 @@ public class GameOfLifeController implements Initializable {
         canvasBack.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                gc.setFill(Color.BLACK);
+                gc.setFill(Color.ORANGE);
                 int x1 = (int) event.getX() / cellSize;
                 int y1 = (int) event.getY() / cellSize;
 
@@ -109,6 +119,14 @@ public class GameOfLifeController implements Initializable {
 
     }
 
+    public void clearGrid(){
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                gc2.clearRect(i * cellSize, j * cellSize, cellSize, cellSize);
+            }
+        }
+    }
+
     @FXML
     public void start() {
         if ("Start".equals(start.getText())) {
@@ -120,21 +138,14 @@ public class GameOfLifeController implements Initializable {
                 public void run() {
                     if (runner) {
                         // task to run goes here
-
-
                         rule.nextGeneration();
                         clearCanvas();
                         draw();
-
-
-
                     } else {
 
                     }
                 }
             };
-
-
             int delay = 0;
             intervalPeriod = 100;
             timer.scheduleAtFixedRate(task, delay, intervalPeriod);
@@ -155,7 +166,7 @@ public class GameOfLifeController implements Initializable {
 
     public void draw() {
 
-            gc.setFill(Color.BLACK);
+            gc.setFill(Color.ORANGE);
             for (int i = 0; i < x; i++) {
                 for (int j = 0; j < y; j++) {
 
@@ -172,19 +183,42 @@ public class GameOfLifeController implements Initializable {
 
     @FXML
     public void openMenu(ActionEvent event) {
-        menu.setVisible(true);
-        menu.setManaged(true);
-        System.out.println("Synelig");
+            menu.setVisible(true);
+            menu.setManaged(true);
+            System.out.println("Synelig");
 
     }
 
     @FXML
     public void Apply(ActionEvent event) {
+        if(small.isSelected()) {
+            setCellSize(10);
+        }
+        else if(normal.isSelected()) {
+            setCellSize(20);
+        }
+        else {
+            setCellSize(50);
+        }
+        clearGrid();
+        clearCanvas();
+        drawGrid();
+
+
         menu.setVisible(false);
         menu.setManaged(false);
         System.out.println("Usynelig");
 
     }
 
+    @FXML
+    public void BW() {
+        gc.setFill(Color.BLACK);
+    }
+
+    @FXML
+    public void fullScreen() {
+
+    }
 
 }
