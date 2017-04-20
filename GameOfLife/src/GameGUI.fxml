@@ -23,7 +23,7 @@
       <Pane fx:id="menu" layoutY="27.0" managed="true" prefHeight="713.0" prefWidth="172.0" visible="true">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1e2425" height="712.0" stroke="#1e2425" strokeType="INSIDE" width="179.0" />
-            <Button layoutX="46.0" layoutY="659.0" mnemonicParsing="false" onAction="#Apply" prefHeight="25.0" prefWidth="80.0" text="Apply" />
+            <Button layoutX="36.0" layoutY="658.0" mnemonicParsing="false" onAction="#Apply" prefHeight="25.0" prefWidth="109.0" text="Lukk Settings" />
             <MenuButton layoutX="37.0" layoutY="550.0" mnemonicParsing="false" text="Choose theme">
               <items>
                 <MenuItem mnemonicParsing="false" text="Orange dream" />
@@ -57,17 +57,23 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <RadioButton fx:id="small" layoutX="27.0" layoutY="172.0" mnemonicParsing="false" selected="true">
+            <RadioButton fx:id="small" layoutX="20.0" layoutY="172.0" mnemonicParsing="false" onAction="#RadioButtons">
                <toggleGroup>
                   <ToggleGroup fx:id="Size" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="normal" layoutX="79.0" layoutY="172.0" mnemonicParsing="false" toggleGroup="$Size" />
-            <RadioButton fx:id="large" layoutX="127.0" layoutY="172.0" mnemonicParsing="false" toggleGroup="$Size" />
-            <Label layoutX="30.0" layoutY="155.0" text="10" textFill="WHITE" />
-            <Label layoutX="79.0" layoutY="155.0" text="20" textFill="WHITE" />
-            <Label layoutX="127.0" layoutY="155.0" text="50" textFill="WHITE" />
+            <RadioButton fx:id="normal" layoutX="46.0" layoutY="172.0" mnemonicParsing="false" onAction="#RadioButtons" selected="true" toggleGroup="$Size" />
+            <RadioButton fx:id="large" layoutX="73.0" layoutY="172.0" mnemonicParsing="false" onAction="#RadioButtons" toggleGroup="$Size" />
+            <Label layoutX="24.0" layoutY="155.0" text="5" textFill="WHITE" />
+            <Label layoutX="50.0" layoutY="155.0" text="10" textFill="WHITE" />
+            <Label layoutX="77.0" layoutY="155.0" text="20" textFill="WHITE" />
             <Slider layoutX="20.0" layoutY="297.0" />
+            <RadioButton fx:id="large2" layoutX="97.0" layoutY="172.0" mnemonicParsing="false" onAction="#RadioButtons" toggleGroup="$Size" />
+            <RadioButton fx:id="large3" layoutX="123.0" layoutY="172.0" mnemonicParsing="false" onAction="#RadioButtons" toggleGroup="$Size" />
+            <RadioButton fx:id="large4" layoutX="148.0" layoutY="172.0" mnemonicParsing="false" onAction="#RadioButtons" toggleGroup="$Size" />
+            <Label layoutX="101.0" layoutY="155.0" text="30" textFill="WHITE" />
+            <Label layoutX="127.0" layoutY="155.0" text="40" textFill="WHITE" />
+            <Label layoutX="152.0" layoutY="155.0" text="50" textFill="WHITE" />
          </children>
       </Pane>
       <MenuBar id="modBar" layoutY="2.0" prefHeight="25.0" prefWidth="951.0" style="-fx-background-color: #1E2425;" stylesheets="@style.css">

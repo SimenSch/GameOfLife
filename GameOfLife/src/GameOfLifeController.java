@@ -44,6 +44,12 @@ public class GameOfLifeController implements Initializable {
     public RadioButton normal;
     @FXML
     public RadioButton large;
+    @FXML
+    public RadioButton large2;
+    @FXML
+    public RadioButton large3;
+    @FXML
+    public RadioButton large4;
     private Color[] colors = {Color.RED, Color.ALICEBLUE, Color.BISQUE, Color.MAROON, Color.FIREBRICK, Color.BURLYWOOD, Color.SEAGREEN, Color.CORNSILK,};
     private Color blue = Color.BLUEVIOLET;
     public int intervalPeriod;
@@ -207,26 +213,46 @@ public class GameOfLifeController implements Initializable {
     }
 
     @FXML
+    public void RadioButtons(ActionEvent event){
+            if(small.isSelected()) {
+                setCellSize(5);
+                clearGrid();
+                drawGrid();
+            }
+            else if(normal.isSelected()) {
+                setCellSize(10);
+                clearGrid();
+                drawGrid();
+            }
+            else if (large.isSelected()) {
+                setCellSize(20);
+                clearGrid();
+                drawGrid();
+            }
+            else if (large2.isSelected()) {
+                setCellSize(30);
+                clearGrid();
+                drawGrid();
+            }
+            else if (large3.isSelected()) {
+                setCellSize(40);
+                clearGrid();
+                drawGrid();
+            }
+            else {
+                setCellSize(50);
+                clearGrid();
+                drawGrid();
+            }
+        }
+
+    @FXML
     public void Apply(ActionEvent event) {
-        if(small.isSelected()) {
-            setCellSize(10);
-        }
-        else if(normal.isSelected()) {
-            setCellSize(20);
-        }
-        else {
-            setCellSize(50);
-        }
-        clearGrid();
-        clearCanvas();
-        drawGrid();
+            menu.setVisible(false);
+            menu.setManaged(false);
+            System.out.println("Usynelig");
 
-
-        menu.setVisible(false);
-        menu.setManaged(false);
-        System.out.println("Usynelig");
-
-    }
+        }
 
     @FXML
     public void BW() {
