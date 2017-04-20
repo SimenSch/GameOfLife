@@ -201,7 +201,7 @@ public class GameOfLifeController implements Initializable {
             setCellSize(50);
         }
         clearGrid();
-        clearCanvas();
+
         drawGrid();
 
 

@@ -25,7 +25,21 @@ import java.util.HashMap;
 
                 }
             }
-        }
+        }/*
+        public int[][] verifyLogin(String uName, String passwd) throws IOException{
+            path valgt_fil= ("");
+            BufferedReader read = new BufferedReader(new FileReader("brukere.txt"));
+            String line = read.readLine();
+
+            while (line != null){
+                int i=line.indexOf(" ");
+                if (uName.equals(line.substring(0,i)) && passwd.equals(line.substring(i+1))){
+                    return true;
+                }
+                line = read.readLine();
+            }
+            return false;
+        }*/
     }
 
 
