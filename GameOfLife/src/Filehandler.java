@@ -12,35 +12,56 @@ import java.util.HashMap;
      * @author 4 contributor 3(javadoc by 3)
      */
     public class Filehandler {
+        int counterX;
+        int counterY;
 
         public Filehandler() {
         }
 
         public GameOfLifeController glc;
         public int[][] gridfile = new int[glc.x][glc.y];
+    public char[] charGrid;
+        public void doubleFor(int x, int y) {
+            for (int i = 0; i < y; i++) {
+                for (int j = 0; j < x; j++) {
+                    if (charGrid[j]=='.'){
 
-        public void Donkeykong() {
-            for (int i = 0; i < 1; i++) {
-                for (int j = 0; j < 1; j++) {
-
+                        glc.grid[i][j]=0;
+                    }
+                    else if(charGrid[j]=='O'){
+                        glc.grid[i][j]=1;
+                    }
                 }
             }
-        }/*
-        public int[][] verifyLogin(String uName, String passwd) throws IOException{
-            path valgt_fil= ("");
-            BufferedReader read = new BufferedReader(new FileReader("brukere.txt"));
+        }
+
+        public void fileGridRead() throws IOException {
+
+            BufferedReader read = new BufferedReader(new FileReader("plaintext.txt"));
             String line = read.readLine();
+            String name = "";
 
-            while (line != null){
-                int i=line.indexOf(" ");
-                if (uName.equals(line.substring(0,i)) && passwd.equals(line.substring(i+1))){
-                    return true;
+
+            //counter for x og y
+            while (line != null) {
+                if (line.matches("!Name") || line.matches("!")) {
+
+                } else if (line.matches(".") || line.matches("O")) {
+                    int i = line.indexOf(".");
+                    int k = line.indexOf("O");
+                    charGrid = line.toCharArray();
+
+                    counterX = i + k;
+                    counterY++;
                 }
-                line = read.readLine();
+
             }
-            return false;
-        }*/
+
+        }
+
+
     }
+
 
 
 
