@@ -74,7 +74,7 @@
         <menus>
           <Menu id="modItem" mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Filbehandler" />
+              <MenuItem mnemonicParsing="false" onAction="#openFile" text="Filbehandler" />
             </items>
           </Menu>
           <Menu id="modItem" mnemonicParsing="false" text="Edit">
@@ -95,7 +95,7 @@
             <Button fx:id="clear" layoutX="856.0" layoutY="2.0" mnemonicParsing="false" onAction="#reset" prefHeight="25.0" prefWidth="101.0" text="Clear" />
          </children>
       </Pane>
-      <Pane layoutX="180.0" layoutY="178.0" prefHeight="455.0" prefWidth="608.0" style="-fx-background-color: #1e2425;">
+      <Pane fx:id="menuFile" layoutX="180.0" layoutY="178.0" prefHeight="455.0" prefWidth="608.0" style="-fx-background-color: #1e2425;">
          <children>
             <Label layoutX="211.0" layoutY="6.0" text="Filbehandler" textFill="WHITE">
                <font>
@@ -110,14 +110,14 @@
             </MenuButton>
             <Button layoutX="14.0" layoutY="306.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Import" />
             <Button layoutX="14.0" layoutY="267.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Export" />
-            <Pane layoutX="143.0" layoutY="53.0" prefHeight="388.0" prefWidth="455.0" style="-fx-background-color: #617073;">
+            <Pane layoutX="143.0" layoutY="53.0" prefHeight="388.0" prefWidth="455.0" style="-fx-background-color: white;">
                <children>
                   <Canvas height="388.0" width="455.0" />
                </children>
             </Pane>
             <TextField layoutX="14.0" layoutY="369.0" prefHeight="25.0" prefWidth="101.0" promptText="Søk..." />
             <Button layoutX="115.0" layoutY="369.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="21.0" text="Søk" />
-            <Button layoutX="14.0" layoutY="416.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Lukk filbehandler" />
+            <Button layoutX="14.0" layoutY="416.0" mnemonicParsing="false" onAction="#closeFile" prefHeight="25.0" prefWidth="121.0" text="Lukk filbehandler" />
          </children>
       </Pane>
    </children>
