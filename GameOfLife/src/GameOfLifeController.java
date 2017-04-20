@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.FileHandler;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -44,6 +45,12 @@ public class GameOfLifeController implements Initializable {
     public RadioButton normal;
     @FXML
     public RadioButton large;
+    @FXML
+    public RadioButton large2;
+    @FXML
+    public RadioButton large3;
+    @FXML
+    public RadioButton large4;
     private Color[] colors = {Color.RED, Color.ALICEBLUE, Color.BISQUE, Color.MAROON, Color.FIREBRICK, Color.BURLYWOOD, Color.SEAGREEN, Color.CORNSILK,};
     private Color blue = Color.BLUEVIOLET;
     public int intervalPeriod;
@@ -52,10 +59,13 @@ public class GameOfLifeController implements Initializable {
     public Rules rule = new Rules(this);
     public GraphicsContext gc;
     public GraphicsContext gc2;
+    public FileHandler fh;
     public int x = 1000;
     public int y = 1000;
     public int cellSize = 10;
     public int[][] grid = new int[x][y];
+    Timer timer;
+
 
 
 
@@ -134,7 +144,10 @@ public class GameOfLifeController implements Initializable {
     @FXML
     public void start() {
         if ("Start".equals(start.getText())) {
-
+        if (timer != null){
+            timer.cancel();
+            timer.purge();
+        }
             runner = true;
             Timer timer = new Timer();
             TimerTask task = new TimerTask() {
@@ -146,13 +159,14 @@ public class GameOfLifeController implements Initializable {
                         clearCanvas();
                         draw();
                     } else {
-
+                        timer.cancel();
+                        timer.purge();
                     }
                 }
             };
-            int delay = 0;
+            int waitSecounds = 0;
             intervalPeriod = 100;
-            timer.scheduleAtFixedRate(task, delay, intervalPeriod);
+            timer.scheduleAtFixedRate(task, waitSecounds, intervalPeriod);
             start.setText("Pause");
         } else {
             start.setText("Start");
@@ -186,6 +200,18 @@ public class GameOfLifeController implements Initializable {
     }
 
     @FXML
+    public void fileImport(ActionEvent event){
+            clearGrid();
+            fh.fileGridRead();
+            x = fh.counterX;
+            y = fh.counterY;
+            clearCanvas();
+            drawGrid();
+            doubleFor(fh.counterX, fh.counterY);
+            draw();
+    }
+
+    @FXML
     public void openFile(ActionEvent event){
             menuFile.setVisible(true);
             menuFile.setManaged(true);
@@ -207,30 +233,67 @@ public class GameOfLifeController implements Initializable {
     }
 
     @FXML
+    public void RadioButtons(ActionEvent event){
+            if(small.isSelected()) {
+                setCellSize(5);
+                clearGrid();
+                drawGrid();
+            }
+            else if(normal.isSelected()) {
+                setCellSize(10);
+                clearGrid();
+                drawGrid();
+            }
+            else if (large.isSelected()) {
+                setCellSize(20);
+                clearGrid();
+                drawGrid();
+            }
+            else if (large2.isSelected()) {
+                setCellSize(30);
+                clearGrid();
+                drawGrid();
+            }
+            else if (large3.isSelected()) {
+                setCellSize(40);
+                clearGrid();
+                drawGrid();
+            }
+            else {
+                setCellSize(50);
+                clearGrid();
+                drawGrid();
+            }
+        }
+
+    @FXML
     public void Apply(ActionEvent event) {
-        if(small.isSelected()) {
-            setCellSize(10);
+            menu.setVisible(false);
+            menu.setManaged(false);
+            System.out.println("Usynelig");
+
         }
-        else if(normal.isSelected()) {
-            setCellSize(20);
-        }
-        else {
-            setCellSize(50);
-        }
-        clearGrid();
-
-        drawGrid();
-
-
-        menu.setVisible(false);
-        menu.setManaged(false);
-        System.out.println("Usynelig");
-
-    }
 
     @FXML
     public void BW() {
         gc.setFill(Color.BLACK);
+    }
+
+    @FXML
+    public void setScreenSize (String preset) {
+        switch (preset) {
+            case "Normal":
+
+                break;
+
+            case "Large":
+
+                break;
+
+            case "FullScreen":
+
+                break;
+        }
     }
 
 
