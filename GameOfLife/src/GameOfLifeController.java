@@ -59,7 +59,7 @@ public class GameOfLifeController implements Initializable {
     public Rules rule = new Rules(this);
     public GraphicsContext gc;
     public GraphicsContext gc2;
-    public FileHandler fh;
+    public Filehandler fh;
     public int x = 1000;
     public int y = 1000;
     public int cellSize = 10;
