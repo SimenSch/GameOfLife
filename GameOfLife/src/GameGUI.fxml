@@ -40,7 +40,7 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <MenuButton layoutX="36.0" layoutY="400.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Choose Size">
+            <MenuButton layoutX="36.0" layoutY="400.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Choose Size" >
               <items>
                 <MenuItem mnemonicParsing="false" text="Normal" />
                 <MenuItem mnemonicParsing="false" text="Large" />
@@ -114,7 +114,7 @@
                 <MenuItem mnemonicParsing="false" text="Action 2" />
               </items>
             </MenuButton>
-            <Button layoutX="14.0" layoutY="306.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Import" />
+            <Button layoutX="14.0" layoutY="306.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Import" onAction="#fileImport" />
             <Button layoutX="14.0" layoutY="267.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Export" />
             <Pane layoutX="143.0" layoutY="53.0" prefHeight="388.0" prefWidth="455.0" style="-fx-background-color: white;">
                <children>

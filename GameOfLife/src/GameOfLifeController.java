@@ -62,6 +62,7 @@ public class GameOfLifeController implements Initializable {
     public int y = 1000;
     public int cellSize = 10;
     public int[][] grid = new int[x][y];
+    Timer timer;
 
 
 
@@ -140,7 +141,10 @@ public class GameOfLifeController implements Initializable {
     @FXML
     public void start() {
         if ("Start".equals(start.getText())) {
-
+        if (timer != null){
+            timer.cancel();
+            timer.purge();
+        }
             runner = true;
             Timer timer = new Timer();
             TimerTask task = new TimerTask() {
@@ -152,13 +156,14 @@ public class GameOfLifeController implements Initializable {
                         clearCanvas();
                         draw();
                     } else {
-
+                        timer.cancel();
+                        timer.purge();
                     }
                 }
             };
-            int delay = 0;
+            int waitSecounds = 0;
             intervalPeriod = 100;
-            timer.scheduleAtFixedRate(task, delay, intervalPeriod);
+            timer.scheduleAtFixedRate(task, waitSecounds, intervalPeriod);
             start.setText("Pause");
         } else {
             start.setText("Start");
@@ -188,6 +193,11 @@ public class GameOfLifeController implements Initializable {
 
                 }
             }
+
+    }
+
+    @FXML
+    public void fileImport(ActionEvent event){
 
     }
 
@@ -257,6 +267,23 @@ public class GameOfLifeController implements Initializable {
     @FXML
     public void BW() {
         gc.setFill(Color.BLACK);
+    }
+
+    @FXML
+    public void setScreenSize (String preset) {
+        switch (preset) {
+            case "Normal":
+
+                break;
+
+            case "Large":
+
+                break;
+
+            case "FullScreen":
+
+                break;
+        }
     }
 
 
