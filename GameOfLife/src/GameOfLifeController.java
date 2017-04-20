@@ -1,5 +1,10 @@
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -21,6 +26,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  *
@@ -75,6 +82,7 @@ public class GameOfLifeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        fh = new Filehandler();
         gc = canvas.getGraphicsContext2D();
         gc2 = canvasBack.getGraphicsContext2D();
         menu.setVisible(false);
@@ -200,15 +208,13 @@ public class GameOfLifeController implements Initializable {
     }
 
     @FXML
-    public void fileImport(ActionEvent event){
-            clearGrid();
-            fh.fileGridRead();
-            x = fh.counterX;
-            y = fh.counterY;
-            clearCanvas();
-            drawGrid();
-            doubleFor(fh.counterX, fh.counterY);
-            draw();
+    protected void fileImport(ActionEvent event) throws NullPointerException, IOException, NumberFormatException, InvocationTargetException {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Open File");
+        File file = chooser.showOpenDialog(new Stage());
+        FileReader fileReader = new FileReader(file);
+       grid= fh. parseFile(fileReader);
+        draw();
     }
 
     @FXML

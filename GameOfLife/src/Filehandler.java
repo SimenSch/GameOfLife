@@ -5,62 +5,63 @@
 
 
     import java.io.*;
-import java.util.HashMap;
 
 
-    /**
-     * @author 4 contributor 3(javadoc by 3)
-     */
+
+
     public class Filehandler {
-        int counterX;
-        int counterY;
 
-        public Filehandler() {
-        }
 
-        public GameOfLifeController glc;
-        public int[][] gridfile = new int[glc.x][glc.y];
-    public char[] charGrid;
-        public void doubleFor(int x, int y) {
-            for (int i = 0; i < y; i++) {
-                for (int j = 0; j < x; j++) {
-                    if (charGrid[j]=='.'){
-
-                        glc.grid[i][j]=0;
+        public  Rules rule;
+       public GameOfLifeController glc;
+        public int[][] parseFile(FileReader file) throws IOException {
+            glc = new GameOfLifeController();
+            char[] charArray;
+            int offsetX =20;
+            int offsetY = 20;
+            int [][] arrayFromFile = new int[glc.x][glc.y];
+            int lineNumber = 0;
+            try (BufferedReader reader = new BufferedReader(file)) {
+                String line = reader.readLine();
+                while (line != null) {
+                    charArray = line.toCharArray();
+                    if (charArray[0] == '#'){
                     }
-                    else if(charGrid[j]=='O'){
+                    else{
+                        for(int i = 0; i<charArray.length; i++){
+                            if(charArray[i]== 'O'){
+                                arrayFromFile[lineNumber+offsetY][i+offsetX]=1;
+                            }
+                            else if(charArray[i]== '.'){
+                                arrayFromFile[lineNumber+offsetY][i+offsetX]=0;
+                            }
+                        }
+                        lineNumber++;
+                        line = reader.readLine();
+                    }
+                }
+            }
+            System.out.println("correctly recieved array from file!");
+            for (int i = 0; i < glc.x; i++) {
+                for (int j = 0; j < glc.y; j++) {
+                    if(arrayFromFile[i][j]==1){
                         glc.grid[i][j]=1;
                     }
+                    else if(arrayFromFile[i][j]==0){
+                        glc.grid[i][j]=0;
+                    }
+
                 }
             }
-        }
-
-        public void fileGridRead() throws IOException {
-
-            BufferedReader read = new BufferedReader(new FileReader("plaintext.txt"));
-            String line = read.readLine();
-            String name = "";
-
-
-            //counter for x og y
-            while (line != null) {
-                if (line.matches("!Name") || line.matches("!")) {
-
-                } else if (line.matches(".") || line.matches("O")) {
-                    int i = line.indexOf(".");
-                    int k = line.indexOf("O");
-                    charGrid = line.toCharArray();
-
-                    counterX = i + k;
-                    counterY++;
-                }
-
-            }
+            return arrayFromFile;
 
         }
 
 
     }
+
+
+
 
 
 
