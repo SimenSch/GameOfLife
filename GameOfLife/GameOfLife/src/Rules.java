@@ -73,7 +73,7 @@ public class Rules {
             }
         }
 */
-
+/*
     if (i - 1 !=-1 && (j-1)!=-1 && (i+1)!=glc.x && (j+1)!=glc.y){
 
             if (glc.grid[i - 1][j + 1] == 1 && (i - 1) != -1 && (j + 1) != glc.y) {
@@ -98,7 +98,7 @@ public class Rules {
                 connector++;
             }
         }
-
+*/
 
 
 
