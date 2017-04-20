@@ -35,6 +35,8 @@ public class GameOfLifeController implements Initializable {
     @FXML
     Button start;
     @FXML
+    public Pane menuFile;
+    @FXML
     public Pane menu;
     @FXML
     public RadioButton small;
@@ -67,6 +69,8 @@ public class GameOfLifeController implements Initializable {
         gc2 = canvasBack.getGraphicsContext2D();
         menu.setVisible(false);
         menu.setManaged(false);
+        menuFile.setVisible(false);
+        menuFile.setManaged(false);
         drawGrid();
         draw();
 
@@ -182,6 +186,19 @@ public class GameOfLifeController implements Initializable {
     }
 
     @FXML
+    public void openFile(ActionEvent event){
+            menuFile.setVisible(true);
+            menuFile.setManaged(true);
+            System.out.println("Synelig filbehandler");
+    }
+    @FXML
+    public void closeFile(ActionEvent event){
+            menuFile.setVisible(false);
+            menuFile.setManaged(false);
+            System.out.println("Usynelig filbehandler");
+    }
+
+    @FXML
     public void openMenu(ActionEvent event) {
             menu.setVisible(true);
             menu.setManaged(true);
@@ -216,9 +233,5 @@ public class GameOfLifeController implements Initializable {
         gc.setFill(Color.BLACK);
     }
 
-    @FXML
-    public void fullScreen() {
-
-    }
 
 }
