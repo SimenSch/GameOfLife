@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.FileHandler;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -58,11 +59,13 @@ public class GameOfLifeController implements Initializable {
     public Rules rule = new Rules(this);
     public GraphicsContext gc;
     public GraphicsContext gc2;
+    public FileHandler fh;
     public int x = 1000;
     public int y = 1000;
     public int cellSize = 10;
     public int[][] grid = new int[x][y];
     Timer timer;
+
 
 
 
@@ -198,7 +201,14 @@ public class GameOfLifeController implements Initializable {
 
     @FXML
     public void fileImport(ActionEvent event){
-
+            clearGrid();
+            fh.fileGridRead();
+            x = fh.counterX;
+            y = fh.counterY;
+            clearCanvas();
+            drawGrid();
+            doubleFor(fh.counterX, fh.counterY);
+            draw();
     }
 
     @FXML
