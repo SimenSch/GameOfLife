@@ -40,6 +40,8 @@
                         line = reader.readLine();
                     }
                 }
+            } catch (IOException e) {
+                System.out.println("fil kunne ikke leses.");
             }
             System.out.println("correctly recieved array from file!");
             for (int i = 0; i < glc.x; i++) {

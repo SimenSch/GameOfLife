@@ -19,10 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import javafx.scene.canvas.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Tab;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
@@ -58,6 +55,10 @@ public class GameOfLifeController implements Initializable {
     public RadioButton large3;
     @FXML
     public RadioButton large4;
+    @FXML
+    public MenuItem fullScreen;
+    @FXML
+    public ToggleGroup choosesize;
     private Color[] colors = {Color.RED, Color.ALICEBLUE, Color.BISQUE, Color.MAROON, Color.FIREBRICK, Color.BURLYWOOD, Color.SEAGREEN, Color.CORNSILK,};
     private Color blue = Color.BLUEVIOLET;
     public int intervalPeriod;
@@ -72,6 +73,8 @@ public class GameOfLifeController implements Initializable {
     public int cellSize = 10;
     public int[][] grid = new int[x][y];
     Timer timer;
+    GolSSCG main;
+
 
 
 
@@ -82,6 +85,7 @@ public class GameOfLifeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        main = new GolSSCG();
         fh = new Filehandler();
         gc = canvas.getGraphicsContext2D();
         gc2 = canvasBack.getGraphicsContext2D();
@@ -91,7 +95,6 @@ public class GameOfLifeController implements Initializable {
         menuFile.setManaged(false);
         drawGrid();
         draw();
-
         canvasBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -285,6 +288,8 @@ public class GameOfLifeController implements Initializable {
         gc.setFill(Color.BLACK);
     }
 
+
+
     @FXML
     public void setScreenSize (String preset) {
         switch (preset) {
@@ -296,8 +301,9 @@ public class GameOfLifeController implements Initializable {
 
                 break;
 
-            case "FullScreen":
+            case "fullscreen":
 
+                System.out.println("Hello");
                 break;
         }
     }

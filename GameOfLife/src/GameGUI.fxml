@@ -8,6 +8,7 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -16,7 +17,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="779.0" prefWidth="951.0" style="-fx-background-color: #617073;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameOfLifeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="779.0" prefWidth="951.0" style="-fx-background-color: #617073;" stylesheets="@style2.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameOfLifeController">
    <children>
       <Canvas fx:id="canvas" height="757.0" layoutY="27.0" width="957.0" />
       <Canvas fx:id="canvasBack" height="757.0" layoutY="27.0" width="957.0" />
@@ -40,11 +41,14 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <MenuButton layoutX="36.0" layoutY="400.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Choose Size" >
+            <MenuButton layoutX="36.0" layoutY="400.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Choose Size">
               <items>
-                <MenuItem mnemonicParsing="false" text="Normal" />
-                <MenuItem mnemonicParsing="false" text="Large" />
-                  <MenuItem mnemonicParsing="false" text="Full Screen" />
+                  <RadioMenuItem fx:id="NormalWindow" mnemonicParsing="false" text="Normal" toggleGroup="$choosesize" userData="NormalWindow">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="choosesize" />
+                     </toggleGroup></RadioMenuItem>
+                  <RadioMenuItem fx:id="LargeWindow" mnemonicParsing="false" text="Large" toggleGroup="$choosesize" userData="LargeWindow" />
+                  <RadioMenuItem fx:id="fullScreen" mnemonicParsing="false" text="Full Screen" toggleGroup="$choosesize" userData="fullscreen" />
               </items>
             </MenuButton>
             <Label layoutX="66.0" layoutY="251.0" text="Speed" textFill="WHITE">
@@ -114,7 +118,7 @@
                 <MenuItem mnemonicParsing="false" text="Action 2" />
               </items>
             </MenuButton>
-            <Button layoutX="14.0" layoutY="306.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Import" onAction="#fileImport" />
+            <Button layoutX="14.0" layoutY="306.0" mnemonicParsing="false" onAction="#fileImport" prefHeight="25.0" prefWidth="121.0" text="Import" />
             <Button layoutX="14.0" layoutY="267.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Export" />
             <Pane layoutX="143.0" layoutY="53.0" prefHeight="388.0" prefWidth="455.0" style="-fx-background-color: white;">
                <children>
