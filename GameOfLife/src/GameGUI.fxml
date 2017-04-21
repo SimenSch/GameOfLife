@@ -27,8 +27,12 @@
             <Button layoutX="36.0" layoutY="658.0" mnemonicParsing="false" onAction="#Apply" prefHeight="25.0" prefWidth="109.0" text="Lukk Settings" />
             <MenuButton layoutX="37.0" layoutY="550.0" mnemonicParsing="false" text="Choose theme">
               <items>
-                <MenuItem mnemonicParsing="false" text="Orange dream" />
-                <MenuItem fx:id="BW" mnemonicParsing="false" text="Black &amp; White" />
+                  <RadioMenuItem fx:id="Orange" mnemonicParsing="false" selected="true" text="Orange Dream" toggleGroup="$color" userData="Orange">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="color" />
+                     </toggleGroup>
+                  </RadioMenuItem>
+                  <RadioMenuItem fx:id="BW" mnemonicParsing="false" text="Black &amp; White" toggleGroup="$color" userData="BW" onAction="#changeColor" />
               </items>
             </MenuButton>
             <Label layoutX="49.0" layoutY="518.0" text="Color Theme" textFill="WHITE">
@@ -43,7 +47,7 @@
             </Label>
             <MenuButton layoutX="36.0" layoutY="400.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Choose Size">
               <items>
-                  <RadioMenuItem fx:id="NormalWindow" mnemonicParsing="false" text="Normal" toggleGroup="$choosesize" userData="NormalWindow">
+                  <RadioMenuItem fx:id="NormalWindow" mnemonicParsing="false" selected="true" text="Normal" toggleGroup="$choosesize" userData="NormalWindow">
                      <toggleGroup>
                         <ToggleGroup fx:id="choosesize" />
                      </toggleGroup></RadioMenuItem>

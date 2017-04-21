@@ -284,8 +284,18 @@ public class GameOfLifeController implements Initializable {
         }
 
     @FXML
-    public void BW() {
-        gc.setFill(Color.BLACK);
+    public void changeColor(ActionEvent event, String preset) {
+        switch (preset) {
+            case "BW":
+                gc.setFill(Color.BLACK);
+
+                break;
+
+            case "Orange":
+
+                break;
+        }
+
     }
 
 

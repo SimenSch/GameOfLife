@@ -24,6 +24,17 @@ public class GolSSCG extends Application {
         stage.setScene(scene);
         //stage.setMaximized(true);
         stage.show();
+
+
+
+
+
+
+
+
+
+
+
     /*    glc.choosesize.selectedToggleProperty().addListener((p, ov, nv) -> {
             if(nv!= null){
                 if(Objects.equals(nv.getUserData().toString(), "fullscreen")) {
