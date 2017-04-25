@@ -6,13 +6,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
-import java.util.Random;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.logging.FileHandler;
 
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,10 +22,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.*;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.beans.value.ChangeListener;
 
 /**
  * @author Simen & Snorre
@@ -58,6 +62,22 @@ public class GameOfLifeController implements Initializable {
     public MenuItem fullScreen;
     @FXML
     public ToggleGroup choosesize;
+    @FXML
+    public RadioMenuItem BW;
+    @FXML
+    public RadioMenuItem Orange;
+    @FXML
+    public RadioMenuItem NormalWindow;
+    @FXML
+    public RadioMenuItem fullscreen;
+    @FXML
+    public AnchorPane aPane;
+    @FXML
+    public MenuBar modBar;
+    @FXML
+    public Pane nedeBtn;
+    @FXML
+    public Rectangle rec;
     private Color[] colors = {Color.RED, Color.ALICEBLUE, Color.BISQUE, Color.MAROON, Color.FIREBRICK, Color.BURLYWOOD, Color.SEAGREEN, Color.CORNSILK,};
     private Color blue = Color.BLUEVIOLET;
     public int intervalPeriod;
@@ -89,12 +109,51 @@ public class GameOfLifeController implements Initializable {
         menu.setManaged(false);
         menuFile.setVisible(false);
         menuFile.setManaged(false);
+        gc.setFill(Color.ORANGE);
         drawGrid();
         draw();
+
+        canvas.widthProperty().addListener(observable -> redraw());
+        canvas.heightProperty().addListener(observable -> redraw());
+
+        fullScreen.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage = (Stage) aPane.getScene().getWindow();
+                stage.setMaximized(true);
+            }
+        });
+
+        NormalWindow.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage = (Stage) aPane.getScene().getWindow();
+                stage.setMaximized(false);
+            }
+        });
+                /* Color Menu */
+        Orange.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                gc.setFill(Color.ORANGE);
+                aPane.setStyle("-fx-background-color: #617073");
+                modBar.setStyle("-fx-background-color: #1E2425");
+                nedeBtn.setStyle("-fx-background-color: #1E2425");
+                rec.setStyle("-fx-background-color: #1E2425");
+
+            }
+        });
+        BW.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                gc.setFill(Color.BLACK);
+                aPane.setStyle("-fx-background-color: white");
+                modBar.setStyle("-fx-background-color: dimgrey");
+                nedeBtn.setStyle("-fx-background-color: dimgrey");
+                rec.setStyle("-fx-background-color: dimgrey");
+            }
+        });
         canvasBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                gc.setFill(Color.ORANGE);
                 int x1 = (int) event.getX() / cellSize;
                 int y1 = (int) event.getY() / cellSize;
                 grid[x1][y1] = 1;
@@ -105,7 +164,6 @@ public class GameOfLifeController implements Initializable {
         canvasBack.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                gc.setFill(Color.ORANGE);
                 int x1 = (int) event.getX() / cellSize;
                 int y1 = (int) event.getY() / cellSize;
 
@@ -189,8 +247,6 @@ public class GameOfLifeController implements Initializable {
     }
 
     public void draw() {
-
-        gc.setFill(Color.ORANGE);
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
 
@@ -203,6 +259,11 @@ public class GameOfLifeController implements Initializable {
             }
         }
 
+    }
+
+    public void redraw(){
+        clearGrid();
+        drawGrid();
     }
 
     @FXML
@@ -274,21 +335,6 @@ public class GameOfLifeController implements Initializable {
 
     }
 
-    @FXML
-    public void changeColor(ActionEvent event, String preset) {
-        switch (preset) {
-            case "BW":
-                gc.setFill(Color.BLACK);
-
-                break;
-
-            case "Orange":
-
-                break;
-        }
-
-    }
-
 
     @FXML
     public void setScreenSize(String preset) {
@@ -307,6 +353,4 @@ public class GameOfLifeController implements Initializable {
                 break;
         }
     }
-
-
 }

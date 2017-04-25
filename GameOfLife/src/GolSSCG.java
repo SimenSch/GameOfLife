@@ -1,5 +1,7 @@
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,32 +21,9 @@ public class GolSSCG extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("GameGUI.fxml"));
         glc = new GameOfLifeController();
         Scene scene = new Scene(root);
-
         stage.setScene(scene);
-        //stage.setMaximized(true);
         stage.show();
-
-
-
-
-
-
-
-
-
-
-
-    /*    glc.choosesize.selectedToggleProperty().addListener((p, ov, nv) -> {
-            if(nv!= null){
-                if(Objects.equals(nv.getUserData().toString(), "fullscreen")) {
-                    stage.setMaximized(true);
-
-                }
-            }
-        });
-        */
     }
-
     /**
      * @param args the command line arguments
      */
