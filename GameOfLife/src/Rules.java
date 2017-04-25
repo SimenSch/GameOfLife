@@ -1,7 +1,7 @@
 import javafx.scene.paint.Color;
 
 /**
- * Created by Simen on 16.03.2017.
+ * Created by Simen & Snorre on 16.03.2017.
  */
 
 public class Rules {
@@ -164,21 +164,20 @@ public class Rules {
                     }
                 }
             }*/
-try {
-    for (int k = -1; k <= 1; k++) {
-        for (int l = -1; l <= 1; l++) {
-            if (!(i + k == -1 && i + k == glc.x && i + l == -1 && i + l == glc.y)) {
-                if (k == 0 && l == 0) {
-                    continue;
-                }
-                if (glc.grid[i + k][j + l] == 1) {
-                    connector++;
+        try {
+            for (int k = -1; k <= 1; k++) {
+                for (int l = -1; l <= 1; l++) {
+                    if (!(i + k == -1 && i + k == glc.x && i + l == -1 && i + l == glc.y)) {
+                        if (k == 0 && l == 0) {
+                            continue;
+                        }
+                        if (glc.grid[i + k][j + l] == 1) {
+                            connector++;
+                        }
+                    }
                 }
             }
-        }
-    }
-}
-catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
 
         }
     
@@ -216,11 +215,11 @@ catch (ArrayIndexOutOfBoundsException e){
     */
 
 
-return connector;
+        return connector;
 
 
-                    }
-                }
+    }
+}
 
 
 

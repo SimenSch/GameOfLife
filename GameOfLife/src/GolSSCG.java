@@ -8,8 +8,7 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 /**
- *
- * @author Simen
+ * @author Simen & Snorre
  */
 public class GolSSCG extends Application {
 
@@ -20,7 +19,7 @@ public class GolSSCG extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("GameGUI.fxml"));
         glc = new GameOfLifeController();
         Scene scene = new Scene(root);
-        
+
         stage.setScene(scene);
         //stage.setMaximized(true);
         stage.show();
