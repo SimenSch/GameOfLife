@@ -12,12 +12,12 @@ public class Filehandler {
     public Rules rule;
     public GameOfLifeController glc;
 
-    public int[][] parseFile(FileReader file) throws IOException {
+    public byte[][] parseFile(FileReader file) throws IOException {
         glc = new GameOfLifeController();
         char[] charArray;
         int offsetX = 20;
         int offsetY = 20;
-        int[][] arrayFromFile = new int[glc.x][glc.y];
+        byte[][] arrayFromFile = new byte[glc.x][glc.y];
         int lineNumber = 0;
         try (BufferedReader reader = new BufferedReader(file)) {
             String line = reader.readLine();

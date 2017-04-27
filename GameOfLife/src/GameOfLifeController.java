@@ -1,5 +1,6 @@
 
 
+import java.beans.Visibility;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -78,6 +79,8 @@ public class GameOfLifeController implements Initializable {
     public Pane nedeBtn;
     @FXML
     public Rectangle rec;
+    @FXML
+    public Slider zSlider;
     private Color[] colors = {Color.RED, Color.ALICEBLUE, Color.BISQUE, Color.MAROON, Color.FIREBRICK, Color.BURLYWOOD, Color.SEAGREEN, Color.CORNSILK,};
     private Color blue = Color.BLUEVIOLET;
     public int intervalPeriod;
@@ -87,10 +90,10 @@ public class GameOfLifeController implements Initializable {
     public GraphicsContext gc;
     public GraphicsContext gc2;
     public Filehandler fh;
-    public int x = 1000;
-    public int y = 1000;
+    public int x = 1980;
+    public int y = 1080;
     public int cellSize = 10;
-    public int[][] grid = new int[x][y];
+    public byte[][] grid = new byte[x][y];
     Timer timer;
     GolSSCG main;
 
@@ -110,17 +113,21 @@ public class GameOfLifeController implements Initializable {
         menuFile.setVisible(false);
         menuFile.setManaged(false);
         gc.setFill(Color.ORANGE);
+        intervalPeriod = 100;
         drawGrid();
         draw();
-
-        canvas.widthProperty().addListener(observable -> redraw());
-        canvas.heightProperty().addListener(observable -> redraw());
 
         fullScreen.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Stage stage = (Stage) aPane.getScene().getWindow();
                 stage.setMaximized(true);
+                canvas.setWidth(1980);
+                canvas.setHeight(1080);
+                canvasBack.setWidth(1980);
+                canvasBack.setHeight(1080);
+                clearGrid();
+                drawGrid();
             }
         });
 
@@ -151,6 +158,13 @@ public class GameOfLifeController implements Initializable {
                 rec.setStyle("-fx-background-color: dimgrey");
             }
         });
+
+        zSlider.valueProperty().addListener((ov, old_val, new_val) -> {
+                intervalPeriod = new_val.intValue();
+        });
+
+
+
         canvasBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -166,16 +180,12 @@ public class GameOfLifeController implements Initializable {
             public void handle(MouseEvent event) {
                 int x1 = (int) event.getX() / cellSize;
                 int y1 = (int) event.getY() / cellSize;
-
                 //gc.setFill(Color.CRIMSON);
-
                 if (y1 < y && x1 < x && y1 >= 0 && x1 >= 0) {
                     gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
-
                     if (grid[x1][y1] == 0) {
                         grid[x1][y1] = 1;
                     } else {
-
                     }
                 } else {
                 }
@@ -193,16 +203,12 @@ public class GameOfLifeController implements Initializable {
 
     public void reset() {
         clearCanvas();
-        grid = new int[x][y];
+        grid = new byte[x][y];
 
     }
 
     public void clearGrid() {
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                gc2.clearRect(i * cellSize, j * cellSize, cellSize, cellSize);
-            }
-        }
+                gc2.clearRect(0, 0, x, y);
     }
 
     @FXML
@@ -218,10 +224,12 @@ public class GameOfLifeController implements Initializable {
                 @Override
                 public void run() {
                     if (runner) {
-                        // task to run goes here
+                        long start = System.currentTimeMillis();
                         rule.nextGeneration();
                         clearCanvas();
                         draw();
+                        long elapsed = System.currentTimeMillis() - start;
+                        System.out.println("Time between frames (ms): " + elapsed); //it changes alot, this it's because the sound?
                     } else {
                         timer.cancel();
                         timer.purge();
@@ -229,7 +237,6 @@ public class GameOfLifeController implements Initializable {
                 }
             };
             int waitSecounds = 0;
-            intervalPeriod = 100;
             timer.scheduleAtFixedRate(task, waitSecounds, intervalPeriod);
             start.setText("Pause");
         } else {
@@ -241,18 +248,12 @@ public class GameOfLifeController implements Initializable {
 
     public void clearCanvas() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        //gc.clearRect(0, 0, x * (cellSize), y * (cellSize));
-
-
     }
 
     public void draw() {
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-
+        for (int i = 0; i < canvas.getWidth(); i++) {
+            for (int j = 0; j < canvas.getHeight(); j++) {
                 if (grid[i][j] == 1) {
-
-
                     gc.fillRect(i * (cellSize), j * (cellSize), cellSize, cellSize);
                 }
 
@@ -260,12 +261,6 @@ public class GameOfLifeController implements Initializable {
         }
 
     }
-
-    public void redraw(){
-        clearGrid();
-        drawGrid();
-    }
-
     @FXML
     protected void fileImport(ActionEvent event) throws NullPointerException, IOException, NumberFormatException, InvocationTargetException {
         FileChooser chooser = new FileChooser();
@@ -295,7 +290,6 @@ public class GameOfLifeController implements Initializable {
         menu.setVisible(true);
         menu.setManaged(true);
         System.out.println("Synelig");
-
     }
 
     @FXML
@@ -333,24 +327,5 @@ public class GameOfLifeController implements Initializable {
         menu.setManaged(false);
         System.out.println("Usynelig");
 
-    }
-
-
-    @FXML
-    public void setScreenSize(String preset) {
-        switch (preset) {
-            case "Normal":
-
-                break;
-
-            case "Large":
-
-                break;
-
-            case "fullscreen":
-
-                System.out.println("Hello");
-                break;
-        }
     }
 }

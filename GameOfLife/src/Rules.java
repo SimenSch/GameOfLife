@@ -17,18 +17,13 @@ public class Rules {
 
     protected void nextGeneration() {
         if (glc.y >= 0 && glc.x >= 0) {
-            int[][] nextGrid = new int[glc.x][glc.y];
-
+            byte[][] nextGrid = new byte[glc.x][glc.y];
             //grid test
             for (int i = 0; i < glc.x; i++) {
                 for (int j = 0; j < glc.y; j++) {
-
-                    nextGrid[i][j] = rules(glc.grid[i][j], countNeightbours(i, j));
+                    nextGrid[i][j] = (byte) rules(glc.grid[i][j], countNeightbours(i, j));
                 }
-
             }
-
-
             glc.grid = nextGrid;
         }
     }
