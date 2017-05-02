@@ -325,7 +325,6 @@ public class GameOfLifeController implements Initializable {
             grid = fh.parseFile(fileReader, grid);
             showPreviewPattern(grid);
             clearCanvas();
-            draw();
         }
     }
 
@@ -344,6 +343,7 @@ public class GameOfLifeController implements Initializable {
         menuFile.setVisible(false);
         menuFile.setManaged(false);
         blur.setVisible(false);
+        draw();
         System.out.println("Usynelig filbehandler");
     }
 
