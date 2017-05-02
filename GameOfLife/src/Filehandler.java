@@ -11,13 +11,16 @@ public class Filehandler {
 
     public Rules rule;
     public GameOfLifeController glc;
+    private String Filename, Filetype, FilePath, FilePattern;
+
 
     public byte[][] parseFile(FileReader file) throws IOException {
         glc = new GameOfLifeController();
+        System.out.println(glc.x+","+glc.y);
         char[] charArray;
-        int offsetX = 20;
-        int offsetY = 20;
-        byte[][] arrayFromFile = new byte[glc.x][glc.y];
+        int offsetX = 10;
+        int offsetY = 10;
+        byte[][] arrayFromFile = new byte[100][80];
         int lineNumber = 0;
         try (BufferedReader reader = new BufferedReader(file)) {
             String line = reader.readLine();
@@ -26,36 +29,58 @@ public class Filehandler {
                 if (charArray[0] == '#') {
                 } else {
                     for (int i = 0; i < charArray.length; i++) {
-                        if (charArray[i] == 'O') {
-                            arrayFromFile[lineNumber + offsetY][i + offsetX] = 1;
+                        if (charArray[i] == 'O' || charArray[i] == 'o' || charArray[i] == '0') {
+                                arrayFromFile[i + offsetX][lineNumber + offsetY] = 1;
+                                System.out.println("O with out of bounds catching");
                         } else if (charArray[i] == '.') {
-                            arrayFromFile[lineNumber + offsetY][i + offsetX] = 0;
                         }
                     }
                     lineNumber++;
-                    line = reader.readLine();
+
                 }
+                line = reader.readLine();
             }
         } catch (IOException e) {
             System.out.println("fil kunne ikke leses.");
         }
         System.out.println("correctly recieved array from file!");
-        for (int i = 0; i < glc.x; i++) {
-            for (int j = 0; j < glc.y; j++) {
-                if (arrayFromFile[i][j] == 1) {
-                    glc.grid[i][j] = 1;
-                } else if (arrayFromFile[i][j] == 0) {
-                    glc.grid[i][j] = 0;
-                }
-
-            }
-        }
         return arrayFromFile;
 
     }
 
+    public void saveAFile(byte[][] saveFile) throws IOException {
+        FilePath = "GameOfLife/src/files/";
+        Filename = "test";
+        Filetype = ".txt";
+        FilePattern = "";
+
+        String content = "!" + Filename;
+        System.out.println(content);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FilePath+Filename+Filetype))) {
+            bw.write(content);
+            bw.newLine();
+            for (int i = 0; i < saveFile[1].length; i++) {
+                FilePattern ="";
+                for (int j = 0; j < saveFile.length; j++) {
+                    if (saveFile[j][i] == 1) {
+                        FilePattern += "0";
+                    } else {
+                        FilePattern += ".";
+                    }
+                }
+                bw.write(FilePattern);
+                bw.newLine();
+            }
+        }
+        System.out.println("Done");
+        System.out.println(FilePattern);
+    }
 
 }
+
+
+
+
 
 
 

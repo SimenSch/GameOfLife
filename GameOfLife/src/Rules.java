@@ -1,6 +1,8 @@
 
 import javafx.scene.paint.Color;
 
+import java.util.Arrays;
+
 /**
  * Created by Simen & Snorre on 16.03.2017.
  */
@@ -17,23 +19,23 @@ public class Rules {
     }
 
     protected void nextGeneration() {
-        if (glc.y >= 0 && glc.x >= 0) {
-            byte[][] nextGrid = new byte[glc.x][glc.y];
-            //grid test
-            for (int i = 0; i < glc.x; i++) {
-                for (int j = 0; j < glc.y; j++) {
-                    nextGrid[i][j] = (byte) rules(glc.grid[i][j], countNeightbours(i, j));
+        byte[][] nextGrid = new byte[glc.x][glc.y];
+        for (int i = 1; i < glc.x; i++) {
+            for (int j = 1; j < glc.y; j++) {
+                if (rules(glc.grid[i][j], countNeightbours(i, j)) == 1) {
+
+                    nextGrid[i][j] = 1;
                 }
+                else;
             }
-            glc.grid = nextGrid;
         }
+        glc.grid = nextGrid;
     }
 
     private int rules(int alive, int connector) {
 
 
         if (alive == 1) {
-
             if (connector <= 1) {
                 return 0;
             } else if (connector >= 4) {
@@ -55,7 +57,7 @@ public class Rules {
 
     protected int countNeightbours(int i, int j) {
         connector = 0;
-        if (i > 1 && j > 1 && i < glc.x -1 && j < glc.y - 1){
+        if (i > 1 && j > 1 && i < glc.x - 1 && j < glc.y - 1) {
 
             if (glc.grid[i - 1][j] == 1) {
                 connector++;
@@ -81,23 +83,10 @@ public class Rules {
             if (glc.grid[i + 1][j - 1] == 1) {
                 connector++;
             }
-
-
-
         }
-
-
         return connector;
-
-
     }
 }
-
-
-
-
-
-
 
 
 //alt i midten

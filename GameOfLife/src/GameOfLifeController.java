@@ -1,35 +1,28 @@
 
 
-import java.beans.Visibility;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
-import java.util.*;
-import java.util.logging.FileHandler;
-
-import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
-import javafx.scene.canvas.*;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.beans.value.ChangeListener;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author Simen & Snorre
@@ -86,16 +79,21 @@ public class GameOfLifeController implements Initializable {
     public int intervalPeriod;
     public boolean runner;
     public boolean set;
-    public Rules rule = new Rules(this);
+    public Rules rule;
     public GraphicsContext gc;
     public GraphicsContext gc2;
     public Filehandler fh;
-    public int x = 1980;
-    public int y = 1080;
-    public int cellSize = 10;
-    public byte[][] grid = new byte[x][y];
+    public int x;
+    public int y;
+    public int cellSize;
+    public byte[][] grid;
+    public Filehandler saveAFile;
     Timer timer;
     GolSSCG main;
+    GameOfLifeController glc;
+
+    public GameOfLifeController() {
+    }
 
 
     public void setCellSize(int cellSize) {
@@ -104,8 +102,15 @@ public class GameOfLifeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        rule = new Rules(this);
+        glc = new GameOfLifeController();
         main = new GolSSCG();
         fh = new Filehandler();
+        cellSize = 10;
+
+        x = 5 + (int) canvas.getWidth() / cellSize;
+        y = 5 + (int) canvas.getHeight() / cellSize;
+        grid = new byte[x][y];
         gc = canvas.getGraphicsContext2D();
         gc2 = canvasBack.getGraphicsContext2D();
         menu.setVisible(false);
@@ -116,6 +121,9 @@ public class GameOfLifeController implements Initializable {
         intervalPeriod = 100;
         drawGrid();
         draw();
+
+        System.out.println("Working Directory = " +
+                System.getProperty("user.dir"));
 
         fullScreen.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -128,6 +136,7 @@ public class GameOfLifeController implements Initializable {
                 canvasBack.setHeight(1080);
                 clearGrid();
                 drawGrid();
+                newArray();
             }
         });
 
@@ -141,6 +150,9 @@ public class GameOfLifeController implements Initializable {
                 /* Color Menu */
         Orange.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
+                clearGrid();
+                gc2.setStroke(Color.BLACK);
+                drawGrid();
                 gc.setFill(Color.ORANGE);
                 aPane.setStyle("-fx-background-color: #617073");
                 modBar.setStyle("-fx-background-color: #1E2425");
@@ -151,18 +163,21 @@ public class GameOfLifeController implements Initializable {
         });
         BW.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
+                clearGrid();
+                gc2.setStroke(Color.DARKGRAY);
+                drawGrid();
                 gc.setFill(Color.BLACK);
                 aPane.setStyle("-fx-background-color: white");
                 modBar.setStyle("-fx-background-color: dimgrey");
                 nedeBtn.setStyle("-fx-background-color: dimgrey");
                 rec.setStyle("-fx-background-color: dimgrey");
+
             }
         });
 
         zSlider.valueProperty().addListener((ov, old_val, new_val) -> {
-                intervalPeriod = new_val.intValue();
+            intervalPeriod = new_val.intValue();
         });
-
 
 
         canvasBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -192,25 +207,6 @@ public class GameOfLifeController implements Initializable {
             }
         });
     }
-
-    public void drawGrid() {
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                gc2.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
-            }
-        }
-    }
-
-    public void reset() {
-        clearCanvas();
-        grid = new byte[x][y];
-
-    }
-
-    public void clearGrid() {
-                gc2.clearRect(0, 0, x, y);
-    }
-
     @FXML
     public void start() {
         if ("Start".equals(start.getText())) {
@@ -246,29 +242,65 @@ public class GameOfLifeController implements Initializable {
     }
 
 
-    public void clearCanvas() {
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    public void drawGrid() {
+        for (double i = 0; i < canvas.getWidth(); i++) {
+            for (double j = 0; j < canvas.getHeight(); j++) {
+                gc2.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
+            }
+        }
     }
-
     public void draw() {
-        for (int i = 0; i < canvas.getWidth(); i++) {
-            for (int j = 0; j < canvas.getHeight(); j++) {
-                if (grid[i][j] == 1) {
+        for (int i = 1; i < x; i ++) {
+            for (int j = 1; j < y; j ++) {
+                if (grid[i][j] == 1) {//kan hende importert array er større enn grid[][]
                     gc.fillRect(i * (cellSize), j * (cellSize), cellSize, cellSize);
+                }
+                else{
+
                 }
 
             }
         }
+    }
+
+    public void newArray(){
+        x = 5+(int) canvas.getWidth()/cellSize;
+        y = 5+(int) canvas.getHeight()/cellSize;
+        grid = new byte[x][y];
+    }
+
+    public void reset() {
+        clearCanvas();
+        grid = new byte[x][y];
 
     }
+
+    public void clearGrid() {
+        gc2.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    }
+
+
+
+
+    public void clearCanvas() {
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    }
+
+
+
+
     @FXML
     protected void fileImport(ActionEvent event) throws NullPointerException, IOException, NumberFormatException, InvocationTargetException {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Open File");
         File file = chooser.showOpenDialog(new Stage());
-        FileReader fileReader = new FileReader(file);
-        grid = fh.parseFile(fileReader);
-        draw();
+        if (file != null) {
+            FileReader fileReader = new FileReader(file);
+            newArray();
+            grid = fh.parseFile(fileReader);
+            clearCanvas();
+            draw();
+        }
     }
 
     @FXML
@@ -296,29 +328,26 @@ public class GameOfLifeController implements Initializable {
     public void RadioButtons(ActionEvent event) {
         if (small.isSelected()) {
             setCellSize(5);
-            clearGrid();
-            drawGrid();
         } else if (normal.isSelected()) {
             setCellSize(10);
-            clearGrid();
-            drawGrid();
+
         } else if (large.isSelected()) {
             setCellSize(20);
-            clearGrid();
-            drawGrid();
+
         } else if (large2.isSelected()) {
             setCellSize(30);
-            clearGrid();
-            drawGrid();
+
         } else if (large3.isSelected()) {
             setCellSize(40);
-            clearGrid();
-            drawGrid();
         } else {
             setCellSize(50);
-            clearGrid();
-            drawGrid();
+
         }
+        clearGrid();
+        drawGrid();
+        clearCanvas();
+        draw();
+        newArray();
     }
 
     @FXML
@@ -327,5 +356,10 @@ public class GameOfLifeController implements Initializable {
         menu.setManaged(false);
         System.out.println("Usynelig");
 
+    }
+
+    @FXML
+    public void Save() throws IOException {
+        fh.saveAFile(grid);
     }
 }

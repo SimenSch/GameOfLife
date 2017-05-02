@@ -80,13 +80,30 @@
                 <Label layoutX="24.0" layoutY="155.0" text="5" textFill="WHITE" />
                 <Label layoutX="50.0" layoutY="155.0" text="10" textFill="WHITE" />
                 <Label layoutX="77.0" layoutY="155.0" text="20" textFill="WHITE" />
-                <Slider fx:id="zSlider" layoutX="20.0" layoutY="483.0" max="1000.0" min="70.0" nodeOrientation="RIGHT_TO_LEFT" value="200.0" />
+                <Slider fx:id="zSlider" layoutX="20.0" layoutY="483.0" max="1000.0" min="40.0" nodeOrientation="RIGHT_TO_LEFT" value="200.0" />
                 <RadioButton fx:id="large2" layoutX="97.0" layoutY="172.0" mnemonicParsing="false" onAction="#RadioButtons" toggleGroup="$Size" />
                 <RadioButton fx:id="large3" layoutX="123.0" layoutY="172.0" mnemonicParsing="false" onAction="#RadioButtons" toggleGroup="$Size" />
                 <RadioButton fx:id="large4" layoutX="148.0" layoutY="172.0" mnemonicParsing="false" onAction="#RadioButtons" toggleGroup="$Size" />
                 <Label layoutX="101.0" layoutY="155.0" text="30" textFill="WHITE" />
                 <Label layoutX="127.0" layoutY="155.0" text="40" textFill="WHITE" />
                 <Label layoutX="152.0" layoutY="155.0" text="50" textFill="WHITE" />
+            <Slider layoutX="20.0" layoutY="413.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="95.0" value="70.0" />
+            <Label layoutX="64.0" layoutY="384.0" text="Volume" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Button layoutX="116.0" layoutY="408.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" text="Play" />
+            <MenuButton layoutX="34.0" layoutY="227.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Choose Rules">
+               <items>
+                  <RadioMenuItem fx:id="rule1" mnemonicParsing="false" selected="true" text="Regular Rules" userData="NormalWindow">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="rulegroup" />
+                     </toggleGroup>
+                  </RadioMenuItem>
+                  <RadioMenuItem fx:id="rule2" mnemonicParsing="false" text="Unique Rules" toggleGroup="$rulegroup" userData="fullscreen" />
+               </items>
+            </MenuButton>
             </children>
         </Pane>
         <MenuBar fx:id="modBar" layoutY="2.0" prefHeight="25.0" prefWidth="951.0" style="-fx-background-color: #1E2425;" stylesheets="@style.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
@@ -135,13 +152,13 @@
                     </items>
                 </MenuButton>
                 <Button layoutX="14.0" layoutY="306.0" mnemonicParsing="false" onAction="#fileImport" prefHeight="25.0" prefWidth="121.0" text="Import" />
-                <Button layoutX="14.0" layoutY="267.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Export" />
+                <Button layoutX="14.0" layoutY="267.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Export" onAction="#Save" />
                 <Pane layoutX="143.0" layoutY="53.0" prefHeight="388.0" prefWidth="455.0" style="-fx-background-color: white;">
                     <children>
                         <Canvas height="388.0" width="455.0" />
                     </children>
                 </Pane>
-                <TextField layoutX="14.0" layoutY="369.0" prefHeight="25.0" prefWidth="101.0" promptText="Søk..." />
+                <TextField layoutX="14.0" layoutY="369.0" prefHeight="25.0" prefWidth="95.0" promptText="URL..." />
                 <Button layoutX="115.0" layoutY="369.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="21.0" text="Søk" />
                 <Button layoutX="14.0" layoutY="416.0" mnemonicParsing="false" onAction="#closeFile" prefHeight="25.0" prefWidth="121.0" text="Lukk filbehandler" />
             </children>
