@@ -25,8 +25,7 @@ public class Rules {
                 if (rules(glc.grid[i][j], countNeightbours(i, j)) == 1) {
 
                     nextGrid[i][j] = 1;
-                }
-                else;
+                } else ;
             }
         }
         glc.grid = nextGrid;

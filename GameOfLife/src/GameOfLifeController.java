@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
@@ -32,6 +33,8 @@ public class GameOfLifeController implements Initializable {
     Canvas canvas;
     @FXML
     Canvas canvasBack;
+    @FXML
+    Canvas fileCanvas;
     @FXML
     Button clear;
     @FXML
@@ -71,7 +74,7 @@ public class GameOfLifeController implements Initializable {
     @FXML
     public Pane nedeBtn;
     @FXML
-    public Rectangle rec;
+    public Rectangle rec, blur;
     @FXML
     public Slider zSlider;
     private Color[] colors = {Color.RED, Color.ALICEBLUE, Color.BISQUE, Color.MAROON, Color.FIREBRICK, Color.BURLYWOOD, Color.SEAGREEN, Color.CORNSILK,};
@@ -82,6 +85,7 @@ public class GameOfLifeController implements Initializable {
     public Rules rule;
     public GraphicsContext gc;
     public GraphicsContext gc2;
+    public GraphicsContext fileGc;
     public Filehandler fh;
     public int x;
     public int y;
@@ -107,12 +111,12 @@ public class GameOfLifeController implements Initializable {
         main = new GolSSCG();
         fh = new Filehandler();
         cellSize = 10;
-
         x = 5 + (int) canvas.getWidth() / cellSize;
         y = 5 + (int) canvas.getHeight() / cellSize;
         grid = new byte[x][y];
         gc = canvas.getGraphicsContext2D();
         gc2 = canvasBack.getGraphicsContext2D();
+        fileGc = fileCanvas.getGraphicsContext2D();
         menu.setVisible(false);
         menu.setManaged(false);
         menuFile.setVisible(false);
@@ -207,6 +211,7 @@ public class GameOfLifeController implements Initializable {
             }
         });
     }
+
     @FXML
     public void start() {
         if ("Start".equals(start.getText())) {
@@ -249,13 +254,13 @@ public class GameOfLifeController implements Initializable {
             }
         }
     }
+
     public void draw() {
-        for (int i = 1; i < grid.length; i ++) {
-            for (int j = 1; j < grid[i].length; j ++) {
+        for (int i = 1; i < grid.length; i++) {
+            for (int j = 1; j < grid[i].length; j++) {
                 if (grid[i][j] == 1) {//kan hende importert array er større enn grid[][]
                     gc.fillRect(i * (cellSize), j * (cellSize), cellSize, cellSize);
-                }
-                else{
+                } else {
 
                 }
 
@@ -263,9 +268,9 @@ public class GameOfLifeController implements Initializable {
         }
     }
 
-    public void newArray(){
-        x = 5+(int) canvas.getWidth()/cellSize;
-        y = 5+(int) canvas.getHeight()/cellSize;
+    public void newArray() {
+        x = 5 + (int) canvas.getWidth() / cellSize;
+        y = 5 + (int) canvas.getHeight() / cellSize;
         grid = new byte[x][y];
     }
 
@@ -280,13 +285,33 @@ public class GameOfLifeController implements Initializable {
     }
 
 
-
-
     public void clearCanvas() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
 
+    public void showPreviewLines() {
+        for (double i = 0; i < fileCanvas.getWidth(); i++) {
+            for (double j = 0; j < fileCanvas.getHeight(); j++) {
+                fileGc.strokeRect(i * 10, j * 10, 10, 10);
+            }
+        }
+    }
+
+    public void showPreviewPattern(byte[][] previewArray) {
+        fileGc.clearRect(0, 0, fileCanvas.getWidth(), fileCanvas.getHeight());
+        showPreviewLines();
+        for (int i = 1; i < previewArray.length; i++) {
+            for (int j = 1; j < previewArray[i].length; j++) {
+                if (grid[i][j] == 1) {//kan hende importert array er større enn grid[][]
+                    fileGc.fillRect(i * (cellSize), j * (cellSize), cellSize, cellSize);
+                } else {
+
+                }
+
+            }
+        }
+    }
 
 
     @FXML
@@ -298,6 +323,7 @@ public class GameOfLifeController implements Initializable {
             FileReader fileReader = new FileReader(file);
             newArray();
             grid = fh.parseFile(fileReader, grid);
+            showPreviewPattern(grid);
             clearCanvas();
             draw();
         }
@@ -308,12 +334,16 @@ public class GameOfLifeController implements Initializable {
         menuFile.setVisible(true);
         menuFile.setManaged(true);
         System.out.println("Synelig filbehandler");
+        blur.setVisible(true);
+        showPreviewLines();
+
     }
 
     @FXML
     public void closeFile(ActionEvent event) {
         menuFile.setVisible(false);
         menuFile.setManaged(false);
+        blur.setVisible(false);
         System.out.println("Usynelig filbehandler");
     }
 

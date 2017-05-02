@@ -14,9 +14,9 @@ public class Filehandler {
     private String Filename, Filetype, FilePath, FilePattern;
 
 
-    public byte[][] parseFile(FileReader file, byte [][] arrayFromFile) throws IOException {
+    public byte[][] parseFile(FileReader file, byte[][] arrayFromFile) throws IOException {
         glc = new GameOfLifeController();
-        System.out.println(glc.x+","+glc.y);
+        System.out.println(glc.x + "," + glc.y);
         char[] charArray;
         int offsetX = 10;
         int offsetY = 10;
@@ -57,11 +57,11 @@ public class Filehandler {
 
         String content = "!" + Filename;
         System.out.println(content);
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FilePath+Filename+Filetype))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FilePath + Filename + Filetype))) {
             bw.write(content);
             bw.newLine();
             for (int i = 0; i < saveFile[1].length; i++) {
-                FilePattern ="";
+                FilePattern = "";
                 for (int j = 0; j < saveFile.length; j++) {
                     if (saveFile[j][i] == 1) {
                         FilePattern += "0";
