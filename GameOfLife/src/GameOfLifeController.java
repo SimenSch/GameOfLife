@@ -250,8 +250,8 @@ public class GameOfLifeController implements Initializable {
         }
     }
     public void draw() {
-        for (int i = 1; i < x; i ++) {
-            for (int j = 1; j < y; j ++) {
+        for (int i = 1; i < grid.length; i ++) {
+            for (int j = 1; j < grid[i].length; j ++) {
                 if (grid[i][j] == 1) {//kan hende importert array er større enn grid[][]
                     gc.fillRect(i * (cellSize), j * (cellSize), cellSize, cellSize);
                 }
@@ -297,7 +297,7 @@ public class GameOfLifeController implements Initializable {
         if (file != null) {
             FileReader fileReader = new FileReader(file);
             newArray();
-            grid = fh.parseFile(fileReader);
+            grid = fh.parseFile(fileReader, grid);
             clearCanvas();
             draw();
         }

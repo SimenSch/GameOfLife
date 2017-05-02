@@ -14,13 +14,12 @@ public class Filehandler {
     private String Filename, Filetype, FilePath, FilePattern;
 
 
-    public byte[][] parseFile(FileReader file) throws IOException {
+    public byte[][] parseFile(FileReader file, byte [][] arrayFromFile) throws IOException {
         glc = new GameOfLifeController();
         System.out.println(glc.x+","+glc.y);
         char[] charArray;
         int offsetX = 10;
         int offsetY = 10;
-        byte[][] arrayFromFile = new byte[100][80];
         int lineNumber = 0;
         try (BufferedReader reader = new BufferedReader(file)) {
             String line = reader.readLine();
@@ -30,8 +29,10 @@ public class Filehandler {
                 } else {
                     for (int i = 0; i < charArray.length; i++) {
                         if (charArray[i] == 'O' || charArray[i] == 'o' || charArray[i] == '0') {
+                            if (i + offsetX < arrayFromFile.length && lineNumber + offsetY < arrayFromFile[i].length) {
                                 arrayFromFile[i + offsetX][lineNumber + offsetY] = 1;
                                 System.out.println("O with out of bounds catching");
+                            }
                         } else if (charArray[i] == '.') {
                         }
                     }
