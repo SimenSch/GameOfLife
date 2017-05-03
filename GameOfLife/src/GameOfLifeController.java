@@ -134,10 +134,10 @@ public class GameOfLifeController implements Initializable {
             public void handle(ActionEvent event) {
                 Stage stage = (Stage) aPane.getScene().getWindow();
                 stage.setMaximized(true);
-                canvas.setWidth(1980);
-                canvas.setHeight(1080);
-                canvasBack.setWidth(1980);
-                canvasBack.setHeight(1080);
+                canvas.setWidth(2560);
+                canvas.setHeight(1440);
+                canvasBack.setWidth(2560);
+                canvasBack.setHeight(1440);
                 clearGrid();
                 drawGrid();
                 newArray();
