@@ -52,9 +52,10 @@ public class Filehandler {
         Filename = "test";
         Filetype = ".txt";
         FilePattern = "";
-
+        int filesInFolder = new File("GameOfLife/src/files/").list().length;
         String content = "!" + Filename;
         System.out.println(content);
+
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FilePath + Filename + Filetype))) {
             bw.write(content);
             bw.newLine();

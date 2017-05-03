@@ -74,6 +74,8 @@ public class Rules {
 
     protected int countNeightbours(int i, int j) {
         connector = 0;
+
+        
         if (i > 1 && j > 1 && i < glc.x - 1 && j < glc.y - 1) {
 
             if (glc.grid[i - 1][j] == 1) {

@@ -6,7 +6,9 @@ import java.util.List;
 public class DynamicBoard {
 
 
-    private List<List<Byte>> board;
+    public GameOfLifeController glc =new GameOfLifeController();
+
+
 
 
 }

@@ -72,6 +72,9 @@ public class GameOfLifeController implements Initializable {
     public int cellSize;
     public byte[][] grid;
     public Filehandler saveAFile;
+    public String background = "GameOfLife/src/Sounds/epic menu music.Wav";
+    public Media backgroundSound = new Media(new File(background).toURI().toString());
+    public MediaPlayer backgroundClick = new MediaPlayer(backgroundSound);
     Timer timer;
     GolSSCG main;
     GameOfLifeController glc;
@@ -215,6 +218,8 @@ public class GameOfLifeController implements Initializable {
 
     @FXML
     public void start() {
+
+
         if ("Start".equals(start.getText())) {
             startButtonClick();
             if (timer != null) {
@@ -227,6 +232,7 @@ public class GameOfLifeController implements Initializable {
                 @Override
                 public void run() {
                     if (runner) {
+                        backgroundClick.play();
                         long start = System.currentTimeMillis();
                         rule.nextGeneration();
                         clearCanvas();
@@ -236,6 +242,7 @@ public class GameOfLifeController implements Initializable {
                     } else {
                         timer.cancel();
                         timer.purge();
+                        backgroundClick.stop();
                     }
                 }
             };
@@ -318,50 +325,59 @@ public class GameOfLifeController implements Initializable {
     }
 
     public void clearButtonClick() {
-        String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/clearClick2.mp3";
+        String standarButton = "GameOfLife/src/Sounds/clearClick2.mp3";
         Media buttonSound = new Media(new File(standarButton).toURI().toString());
         MediaPlayer buttonClick = new MediaPlayer(buttonSound);
         buttonClick.play();
     }
 
     public void menuButtonClick() {
-        String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/clickSound.mp3";
+        String standarButton = "GameOfLife/src/Sounds/clickSound.mp3";
         Media buttonSound = new Media(new File(standarButton).toURI().toString());
         MediaPlayer buttonClick = new MediaPlayer(buttonSound);
         buttonClick.play();
     }
 
     public void tinyButtonClick() {
-        String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/tinyButton.mp3";
+        String standarButton = "GameOfLife/src/Sounds/tinyButton.mp3";
         Media buttonSound = new Media(new File(standarButton).toURI().toString());
         MediaPlayer buttonClick = new MediaPlayer(buttonSound);
         buttonClick.play();
     }
 
     public void pauseButtonClick() {
-        String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/clickOff.mp3";
+        String standarButton = "GameOfLife/src/Sounds/clickOff.mp3";
         Media buttonSound = new Media(new File(standarButton).toURI().toString());
         MediaPlayer buttonClick = new MediaPlayer(buttonSound);
         buttonClick.play();
+
     }
 
     public void regButtonClick() {
-        String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/StandarButton.mp3";
+        String standarButton = "GameOfLife/src/Sounds/StandarButton.mp3";
         Media buttonSound = new Media(new File(standarButton).toURI().toString());
         MediaPlayer buttonClick = new MediaPlayer(buttonSound);
         buttonClick.play();
     }
 
     public void startButtonClick() {
-        String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/clickOn.mp3";
+        String standarButton = "GameOfLife/src/Sounds/clickOn.mp3";
+
         Media buttonSound = new Media(new File(standarButton).toURI().toString());
         MediaPlayer buttonClick = new MediaPlayer(buttonSound);
+
         buttonClick.play();
+
+
+
+
+
+
     }
 
     public void playSound() { //Prototype
         musc = true;
-        String musicFile = "C:/Users/Snorre/Desktop/Work_Programutvikling/Mario.mp3";
+        String musicFile = "GameOfLife/src/Sounds/Mario.mp3";
         Media sound = new Media(new File(musicFile).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         if ("Play".equals(mPlay.getText())) {
