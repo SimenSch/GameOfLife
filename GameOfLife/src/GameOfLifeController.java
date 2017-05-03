@@ -419,6 +419,7 @@ public class GameOfLifeController implements Initializable {
         menu.setVisible(true);
         menu.setManaged(true);
         System.out.println("Synelig");
+        
     }
 
     @FXML
