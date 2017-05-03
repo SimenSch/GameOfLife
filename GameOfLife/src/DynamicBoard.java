@@ -9,13 +9,4 @@ public class DynamicBoard {
     private List<List<Byte>> board;
 
 
-
-
-
-
-
-
-
-
-
 }

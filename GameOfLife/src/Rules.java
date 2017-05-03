@@ -14,6 +14,12 @@ public class Rules {
     public GameOfLifeController glc;
     public int connector;
 
+    public void setRuleSet(String ruleSet) {
+        this.ruleSet = ruleSet;
+    }
+
+    String ruleSet;
+
     public Rules(GameOfLifeController glc) {
         this.glc = glc;
     }
@@ -22,7 +28,7 @@ public class Rules {
         byte[][] nextGrid = new byte[glc.x][glc.y];
         for (int i = 1; i < glc.x; i++) {
             for (int j = 1; j < glc.y; j++) {
-                if (rules(glc.grid[i][j], countNeightbours(i, j)) == 1) {
+                if (rules(glc.grid[i][j], countNeightbours(i, j), ruleSet) == 1) {
 
                     nextGrid[i][j] = 1;
                 } else ;
@@ -31,24 +37,36 @@ public class Rules {
         glc.grid = nextGrid;
     }
 
-    private int rules(int alive, int connector) {
+    private int rules(int alive, int connector, String ruleSet) {
+
+        switch (ruleSet) {
+            case "regular":
+                if (alive == 1) {
+                    if (connector <= 1) {
+                        return 0;
+                    } else if (connector >= 4) {
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+                } else {
+
+                    if (connector == 3) {
+                        return 1;
+                    }
 
 
-        if (alive == 1) {
-            if (connector <= 1) {
-                return 0;
-            } else if (connector >= 4) {
-                return 0;
-            } else {
-                return 1;
-            }
-        } else {
-
-            if (connector == 3) {
-                return 1;
-            }
-
-
+                }
+                break;
+            case "special":
+                if (alive == 1) {
+                    return 1;
+                } else {
+                    if (connector == 3) {
+                        return 1;
+                    }
+                }
+                break;
         }
         return 0;
     }

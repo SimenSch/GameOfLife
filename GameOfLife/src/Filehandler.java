@@ -14,38 +14,36 @@ public class Filehandler {
     private String Filename, Filetype, FilePath, FilePattern;
 
 
-    public byte[][] parseFile(FileReader file, byte[][] arrayFromFile) throws IOException {
+    public byte[][] goThroughFile(FileReader file, byte[][] FileArray) throws IOException {
         glc = new GameOfLifeController();
         System.out.println(glc.x + "," + glc.y);
-        char[] charArray;
-        int offsetX = 10;
-        int offsetY = 10;
-        int lineNumber = 0;
+        char[] charreadLine;
+        int plussX = 10;
+        int plussY = 10;
+        int Yplace = 0;
         try (BufferedReader reader = new BufferedReader(file)) {
-            String line = reader.readLine();
-            while (line != null) {
-                charArray = line.toCharArray();
-                if (charArray[0] == '#') {
+            String readLine = reader.readLine();
+            while (readLine != null) {
+                charreadLine = readLine.toCharArray();
+                if (charreadLine[0] == '#') {
                 } else {
-                    for (int i = 0; i < charArray.length; i++) {
-                        if (charArray[i] == 'O' || charArray[i] == 'o' || charArray[i] == '0') {
-                            if (i + offsetX < arrayFromFile.length && lineNumber + offsetY < arrayFromFile[i].length) {
-                                arrayFromFile[i + offsetX][lineNumber + offsetY] = 1;
-                                System.out.println("O with out of bounds catching");
+                    for (int i = 0; i < charreadLine.length; i++) {
+                        if (charreadLine[i] == 'O') {
+                            if (i + plussX < FileArray.length && Yplace + plussY < FileArray[i].length) {
+                                FileArray[i + plussX][Yplace + plussY] = 1;
                             }
-                        } else if (charArray[i] == '.') {
+                        } else if (charreadLine[i] == '.') {
                         }
                     }
-                    lineNumber++;
-
+                    Yplace++;
                 }
-                line = reader.readLine();
+                readLine = reader.readLine();
             }
         } catch (IOException e) {
             System.out.println("fil kunne ikke leses.");
         }
-        System.out.println("correctly recieved array from file!");
-        return arrayFromFile;
+        System.out.println("Velykket");
+        return FileArray;
 
     }
 

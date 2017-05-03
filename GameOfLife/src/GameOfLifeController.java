@@ -44,7 +44,7 @@ public class GameOfLifeController implements Initializable {
     @FXML
     public MenuButton setSize, setTheme;
     @FXML
-    public RadioMenuItem BW, Orange, NormalWindow, fullscreen;
+    public RadioMenuItem BW, Orange, NormalWindow, fullscreen, rule1, rule2;
     @FXML
     public MenuItem fullScreen, modItemFile;
     @FXML
@@ -91,6 +91,7 @@ public class GameOfLifeController implements Initializable {
         main = new GolSSCG();
         fh = new Filehandler();
         cellSize = 10;
+        rule.setRuleSet("regular");
         x = 5 + (int) canvas.getWidth() / cellSize;
         y = 5 + (int) canvas.getHeight() / cellSize;
         grid = new byte[x][y];
@@ -109,7 +110,21 @@ public class GameOfLifeController implements Initializable {
         System.out.println("Working Directory = " +
                 System.getProperty("user.dir"));
 
+        rule1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                regButtonClick();
+                rule.setRuleSet("regular");
+            }
+        });
 
+        rule2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                regButtonClick();
+                rule.setRuleSet("special");
+            }
+        });
 
         fullScreen.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -302,42 +317,42 @@ public class GameOfLifeController implements Initializable {
         }
     }
 
-    public void clearButtonClick(){
+    public void clearButtonClick() {
         String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/clearClick2.mp3";
         Media buttonSound = new Media(new File(standarButton).toURI().toString());
         MediaPlayer buttonClick = new MediaPlayer(buttonSound);
         buttonClick.play();
     }
 
-    public void menuButtonClick(){
+    public void menuButtonClick() {
         String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/clickSound.mp3";
         Media buttonSound = new Media(new File(standarButton).toURI().toString());
         MediaPlayer buttonClick = new MediaPlayer(buttonSound);
         buttonClick.play();
     }
 
-    public void tinyButtonClick(){
+    public void tinyButtonClick() {
         String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/tinyButton.mp3";
         Media buttonSound = new Media(new File(standarButton).toURI().toString());
         MediaPlayer buttonClick = new MediaPlayer(buttonSound);
         buttonClick.play();
     }
 
-    public void pauseButtonClick(){
+    public void pauseButtonClick() {
         String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/clickOff.mp3";
         Media buttonSound = new Media(new File(standarButton).toURI().toString());
         MediaPlayer buttonClick = new MediaPlayer(buttonSound);
         buttonClick.play();
     }
 
-    public void regButtonClick(){
+    public void regButtonClick() {
         String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/StandarButton.mp3";
         Media buttonSound = new Media(new File(standarButton).toURI().toString());
         MediaPlayer buttonClick = new MediaPlayer(buttonSound);
         buttonClick.play();
     }
 
-    public void startButtonClick(){
+    public void startButtonClick() {
         String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/clickOn.mp3";
         Media buttonSound = new Media(new File(standarButton).toURI().toString());
         MediaPlayer buttonClick = new MediaPlayer(buttonSound);
@@ -353,11 +368,11 @@ public class GameOfLifeController implements Initializable {
             startButtonClick();
             mPlay.setText("Mute");
             mediaPlayer.play();
-        } else if("Mute".equals(mPlay.getText())) {
+        } else if ("Mute".equals(mPlay.getText())) {
             pauseButtonClick();
             mPlay.setText("Play");
             mediaPlayer.stop();
-        }else{
+        } else {
             mediaPlayer.stop();
         }
     }
@@ -371,7 +386,7 @@ public class GameOfLifeController implements Initializable {
         if (file != null) {
             FileReader fileReader = new FileReader(file);
             newArray();
-            grid = fh.parseFile(fileReader, grid);
+            grid = fh.goThroughFile(fileReader, grid);
             showPreviewPattern(grid);
             clearCanvas();
         }
