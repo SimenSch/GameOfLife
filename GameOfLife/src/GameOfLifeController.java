@@ -190,7 +190,9 @@ public class GameOfLifeController implements Initializable {
             public void handle(MouseEvent event) {
                 int x1 = (int) event.getX() / cellSize;
                 int y1 = (int) event.getY() / cellSize;
-                grid[x1][y1] = 1;
+                if(x1<grid.length && y1< grid[1].length){
+                    grid[x1][y1] = 1;
+                }
 
                 gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
             }
@@ -201,13 +203,11 @@ public class GameOfLifeController implements Initializable {
                 int x1 = (int) event.getX() / cellSize;
                 int y1 = (int) event.getY() / cellSize;
                 //gc.setFill(Color.CRIMSON);
-                if (y1 < y && x1 < x && y1 >= 0 && x1 >= 0) {
-                    gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
+                if (y1 < grid[1].length && x1 < grid.length && y1 > 0 && x1 > 0) {
                     if (grid[x1][y1] == 0) {
                         grid[x1][y1] = 1;
-                    } else {
+                        gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
                     }
-                } else {
                 }
             }
         });
@@ -450,6 +450,7 @@ public class GameOfLifeController implements Initializable {
         drawGrid();
         clearCanvas();
         draw();
+        newArray();
     }
 
     @FXML
