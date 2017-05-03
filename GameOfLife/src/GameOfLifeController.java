@@ -11,6 +11,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -30,57 +32,35 @@ import java.util.TimerTask;
  */
 public class GameOfLifeController implements Initializable {
     @FXML
-    Canvas canvas;
-    @FXML
-    Canvas canvasBack;
-    @FXML
-    Canvas fileCanvas;
-    @FXML
-    Button clear;
-    @FXML
-    Button start;
-    @FXML
-    public Pane menuFile;
-    @FXML
-    public Pane menu;
-    @FXML
-    public RadioButton small;
-    @FXML
-    public RadioButton normal;
-    @FXML
-    public RadioButton large;
-    @FXML
-    public RadioButton large2;
-    @FXML
-    public RadioButton large3;
-    @FXML
-    public RadioButton large4;
-    @FXML
-    public MenuItem fullScreen;
-    @FXML
-    public ToggleGroup choosesize;
-    @FXML
-    public RadioMenuItem BW;
-    @FXML
-    public RadioMenuItem Orange;
-    @FXML
-    public RadioMenuItem NormalWindow;
-    @FXML
-    public RadioMenuItem fullscreen;
+    Canvas canvas, canvasBack, fileCanvas;
     @FXML
     public AnchorPane aPane;
     @FXML
-    public MenuBar modBar;
-    @FXML
-    public Pane nedeBtn;
+    public Pane menuFile, menu, nedeBtn;
     @FXML
     public Rectangle rec, blur;
     @FXML
+    public MenuBar modBar;
+    @FXML
+    public MenuButton setSize, setTheme;
+    @FXML
+    public RadioMenuItem BW, Orange, NormalWindow, fullscreen;
+    @FXML
+    public MenuItem fullScreen, modItemFile;
+    @FXML
+    public RadioButton small, normal, large, large2, large3, large4;
+    @FXML
+    public ToggleGroup choosesize;
+    @FXML
+    Button clear, start, mPlay;
+    @FXML
     public Slider zSlider;
+
     private Color[] colors = {Color.RED, Color.ALICEBLUE, Color.BISQUE, Color.MAROON, Color.FIREBRICK, Color.BURLYWOOD, Color.SEAGREEN, Color.CORNSILK,};
     private Color blue = Color.BLUEVIOLET;
     public int intervalPeriod;
     public boolean runner;
+    public boolean musc;
     public boolean set;
     public Rules rule;
     public GraphicsContext gc;
@@ -115,13 +95,13 @@ public class GameOfLifeController implements Initializable {
         y = 5 + (int) canvas.getHeight() / cellSize;
         grid = new byte[x][y];
         gc = canvas.getGraphicsContext2D();
+        gc.setFill(Color.ORANGE);
         gc2 = canvasBack.getGraphicsContext2D();
         fileGc = fileCanvas.getGraphicsContext2D();
         menu.setVisible(false);
         menu.setManaged(false);
         menuFile.setVisible(false);
         menuFile.setManaged(false);
-        gc.setFill(Color.ORANGE);
         intervalPeriod = 100;
         drawGrid();
         draw();
@@ -129,9 +109,12 @@ public class GameOfLifeController implements Initializable {
         System.out.println("Working Directory = " +
                 System.getProperty("user.dir"));
 
+
+
         fullScreen.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                regButtonClick();
                 Stage stage = (Stage) aPane.getScene().getWindow();
                 stage.setMaximized(true);
                 canvas.setWidth(2560);
@@ -147,6 +130,7 @@ public class GameOfLifeController implements Initializable {
         NormalWindow.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                regButtonClick();
                 Stage stage = (Stage) aPane.getScene().getWindow();
                 stage.setMaximized(false);
             }
@@ -154,6 +138,7 @@ public class GameOfLifeController implements Initializable {
                 /* Color Menu */
         Orange.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
+                regButtonClick();
                 clearGrid();
                 gc2.setStroke(Color.BLACK);
                 drawGrid();
@@ -167,6 +152,7 @@ public class GameOfLifeController implements Initializable {
         });
         BW.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
+                regButtonClick();
                 clearGrid();
                 gc2.setStroke(Color.DARKGRAY);
                 drawGrid();
@@ -215,6 +201,7 @@ public class GameOfLifeController implements Initializable {
     @FXML
     public void start() {
         if ("Start".equals(start.getText())) {
+            startButtonClick();
             if (timer != null) {
                 timer.cancel();
                 timer.purge();
@@ -241,6 +228,7 @@ public class GameOfLifeController implements Initializable {
             timer.scheduleAtFixedRate(task, waitSecounds, intervalPeriod);
             start.setText("Pause");
         } else {
+            pauseButtonClick();
             start.setText("Start");
             runner = false;
         }
@@ -275,6 +263,7 @@ public class GameOfLifeController implements Initializable {
     }
 
     public void reset() {
+        clearButtonClick();
         clearCanvas();
         grid = new byte[x][y];
 
@@ -313,6 +302,66 @@ public class GameOfLifeController implements Initializable {
         }
     }
 
+    public void clearButtonClick(){
+        String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/clearClick2.mp3";
+        Media buttonSound = new Media(new File(standarButton).toURI().toString());
+        MediaPlayer buttonClick = new MediaPlayer(buttonSound);
+        buttonClick.play();
+    }
+
+    public void menuButtonClick(){
+        String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/clickSound.mp3";
+        Media buttonSound = new Media(new File(standarButton).toURI().toString());
+        MediaPlayer buttonClick = new MediaPlayer(buttonSound);
+        buttonClick.play();
+    }
+
+    public void tinyButtonClick(){
+        String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/tinyButton.mp3";
+        Media buttonSound = new Media(new File(standarButton).toURI().toString());
+        MediaPlayer buttonClick = new MediaPlayer(buttonSound);
+        buttonClick.play();
+    }
+
+    public void pauseButtonClick(){
+        String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/clickOff.mp3";
+        Media buttonSound = new Media(new File(standarButton).toURI().toString());
+        MediaPlayer buttonClick = new MediaPlayer(buttonSound);
+        buttonClick.play();
+    }
+
+    public void regButtonClick(){
+        String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/StandarButton.mp3";
+        Media buttonSound = new Media(new File(standarButton).toURI().toString());
+        MediaPlayer buttonClick = new MediaPlayer(buttonSound);
+        buttonClick.play();
+    }
+
+    public void startButtonClick(){
+        String standarButton = "C:/Users/Snorre/Desktop/Work_Programutvikling/clickOn.mp3";
+        Media buttonSound = new Media(new File(standarButton).toURI().toString());
+        MediaPlayer buttonClick = new MediaPlayer(buttonSound);
+        buttonClick.play();
+    }
+
+    public void playSound() { //Prototype
+        musc = true;
+        String musicFile = "C:/Users/Snorre/Desktop/Work_Programutvikling/Mario.mp3";
+        Media sound = new Media(new File(musicFile).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        if ("Play".equals(mPlay.getText())) {
+            startButtonClick();
+            mPlay.setText("Mute");
+            mediaPlayer.play();
+        } else if("Mute".equals(mPlay.getText())) {
+            pauseButtonClick();
+            mPlay.setText("Play");
+            mediaPlayer.stop();
+        }else{
+            mediaPlayer.stop();
+        }
+    }
+
 
     @FXML
     protected void fileImport(ActionEvent event) throws NullPointerException, IOException, NumberFormatException, InvocationTargetException {
@@ -330,6 +379,7 @@ public class GameOfLifeController implements Initializable {
 
     @FXML
     public void openFile(ActionEvent event) {
+        regButtonClick();
         menuFile.setVisible(true);
         menuFile.setManaged(true);
         System.out.println("Synelig filbehandler");
@@ -340,6 +390,7 @@ public class GameOfLifeController implements Initializable {
 
     @FXML
     public void closeFile(ActionEvent event) {
+        regButtonClick();
         menuFile.setVisible(false);
         menuFile.setManaged(false);
         blur.setVisible(false);
@@ -349,6 +400,7 @@ public class GameOfLifeController implements Initializable {
 
     @FXML
     public void openMenu(ActionEvent event) {
+        regButtonClick();
         menu.setVisible(true);
         menu.setManaged(true);
         System.out.println("Synelig");
@@ -358,30 +410,36 @@ public class GameOfLifeController implements Initializable {
     public void RadioButtons(ActionEvent event) {
         if (small.isSelected()) {
             setCellSize(5);
+            tinyButtonClick();
         } else if (normal.isSelected()) {
             setCellSize(10);
+            tinyButtonClick();
 
         } else if (large.isSelected()) {
             setCellSize(20);
+            tinyButtonClick();
 
         } else if (large2.isSelected()) {
             setCellSize(30);
+            tinyButtonClick();
 
         } else if (large3.isSelected()) {
             setCellSize(40);
+            tinyButtonClick();
         } else {
             setCellSize(50);
+            tinyButtonClick();
 
         }
         clearGrid();
         drawGrid();
         clearCanvas();
         draw();
-        newArray();
     }
 
     @FXML
     public void Apply(ActionEvent event) {
+        regButtonClick();
         menu.setVisible(false);
         menu.setManaged(false);
         System.out.println("Usynelig");
@@ -390,6 +448,7 @@ public class GameOfLifeController implements Initializable {
 
     @FXML
     public void Save() throws IOException {
+        regButtonClick();
         fh.saveAFile(grid);
     }
 }
