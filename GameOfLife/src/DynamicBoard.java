@@ -172,5 +172,4 @@ public class DynamicBoard {
     public void DynamicGeneration(){
 
     }
-
 }

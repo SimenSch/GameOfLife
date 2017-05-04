@@ -100,7 +100,7 @@ public class GameOfLifeController implements Initializable {
         y = (int) canvas.getHeight() / cellSize;
         grid = new byte[x][y];
 
-        dynamicBoard = new DynamicBoard(x, y);
+       // dynamicBoard = new DynamicBoard(x, y);
 
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.ORANGE);
@@ -405,9 +405,15 @@ public class GameOfLifeController implements Initializable {
         if (file != null) {
             FileReader fileReader = new FileReader(file);
             newArray();
-            grid = fh.goThroughFile(fileReader, grid);
-            showPreviewPattern(grid);
-            clearCanvas();
+            if(file.getName().endsWith(".txt")) {
+                grid = fh.goThroughFile(fileReader, grid);
+                showPreviewPattern(grid);
+                clearCanvas();
+            }else if(file.getName().endsWith(".rle")){
+                grid = fh.goThroughFile(fileReader, grid);
+                showPreviewPattern(grid);
+                clearCanvas();
+            }
         }
     }
 

@@ -4,6 +4,7 @@
 
 
 import java.io.*;
+import java.util.ArrayList;
 
 
 public class Filehandler {
@@ -14,7 +15,7 @@ public class Filehandler {
     private String Filename, Filetype, FilePath, FilePattern;
 
 
-    public int[][] goThroughFile(FileReader file, int[][] FileArray) throws IOException {
+    public ArrayList<ArrayList<Integer>> goThroughFile(FileReader file, ArrayList<ArrayList<Integer>> FileArray) throws IOException {
         glc = new GameOfLifeController();
         System.out.println(glc.x + "," + glc.y);
         char[] charreadLine;
