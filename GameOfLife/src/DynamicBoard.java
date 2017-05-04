@@ -9,37 +9,38 @@ public class DynamicBoard {
 
     public int connector;
     public GameOfLifeController glc =new GameOfLifeController();
-    private List<ArrayList<Byte>> dynoBoard = new ArrayList<>();
+    private List<ArrayList<Integer>> dynoBoard = new ArrayList<>();
 
     public DynamicBoard(int x, int y) {
 
         for (int i = 0; i < x; i++) {
-            ArrayList<Byte> temp = new ArrayList<Byte>();
+            ArrayList<Integer> temp = new ArrayList<Integer>();
 
             for (int j = 0; j < y; j++) {
-                temp.add((byte) 0);
+                temp.add(0);
             }
 
             dynoBoard.add(temp);
         }
+    }
 
 //        dynoBoard.get(10).get(5) == 1;
 //        board[10][5] == 1
 //
 //
-//        dynoBoard.get(40).set(30, (byte) 1 );
+//        dynoBoard.get(40).set(30, 1 );
 //        board[40][30] = 1;
-        public void expand() {
+        public void expand(int x, int y) {
             for (int i = 0; i < x; i++) {
                 if (dynoBoard.get(i).get(0) == 1) {
 
                     for (int j = 0; j < x; j++) {
-                        dynoBoard.get(x).add(0, (byte) 0);
+                        dynoBoard.get(x).add(0, 0);
                     }
                 }
                 if (dynoBoard.get(i).get(y - 1) == 1) {
                     for (int j = 0; j < x; j++) {
-                        dynoBoard.get(x).add((byte) 0);
+                        dynoBoard.get(x).add(0);
                     }
                 }
             }
@@ -54,12 +55,10 @@ public class DynamicBoard {
 
     String ruleSet;
 
-    public Rules(GameOfLifeController glc) {
-        this.glc = glc;
-    }
 
-    protected void nextGeneration() {
-        byte[][] nextGrid = new byte[glc.x][glc.y];
+
+    protected void nextDynoGeneration() {
+        ArrayList<Integer> nextDynoBoard = new ArrayList<>() ;
         for (int i = 1; i < glc.x; i++) {
             for (int j = 1; j < glc.y; j++) {
                 if (rules(glc.grid[i][j], countNeightbours(i, j), ruleSet) == 1) {

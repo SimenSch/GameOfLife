@@ -75,6 +75,89 @@ public class Filehandler {
         System.out.println("Done");
         System.out.println(FilePattern);
     }
+    public void readFile() throws  IOException{
+        String fileName = "c://Users//Teritry//Downloads//pulsar.rle";
+        nName = "";
+        oAuthor = "";
+        cComment = "";
+        StringBuilder comment = new StringBuilder();
+        comment.append(System.getProperty("line.separator"));
+        StringBuilder cellplacing = new StringBuilder();
+
+
+        try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
+            stream.forEach((line) -> {
+                if(line.startsWith("#N ")){
+                    setnName(line);
+                }
+                else if (line.startsWith("#O ")){
+                    setoAuthor(line);
+                }
+                else if (line.startsWith("#C ")){
+                    comment.append(line);
+                    System.out.println(comment);
+                }
+                else if (line.startsWith("x")){
+                    String[] parts = line.split(",");
+                    for(String element : parts){
+                        if(element.startsWith("x")){
+                            setX(Integer.valueOf(element.replaceAll("[^\\d]", ""))) ;
+                        } else if(element.contains("y")){
+                            setY(Integer.valueOf(element.replaceAll("[^\\d]", ""))) ;
+                        } else if (element.contains("B") && element.contains("S")){
+                            String[] rules = element.split("/");
+                            setB(Integer.valueOf(rules[0].replaceAll("[^\\d]", "")));
+                            setS(Integer.valueOf(rules[1].replaceAll("[^\\d]", "")));
+                        }
+
+                    }
+                }
+                else if (line.matches("^[1-9bo].*")){
+                    cellplacing.append(line);
+
+                }
+
+            });
+            setcellPos(cellplacing.toString());
+            drawCells();
+        }
+    }
+    public void drawCells(){
+        gamecontroller.cellGrid.drawCell(500, 500, gamecontroller.cellSize);
+
+    }
+
+    public void setnName(String name){
+        name.replaceAll("#N ", "");
+        nName = name;
+        System.out.println("Setting variable to " + name);
+    }
+    public void setoAuthor(String author){
+        author.replaceAll("#O ", "");
+        nName = author;
+        System.out.println("Setting variable to " + author);
+    }
+    public void setX(int xcord){
+        x = xcord;
+        System.out.println("Setting x: " + x);
+    }
+    public void setY(int ycord){
+        y = ycord;
+        System.out.println("Setting y: " + y);
+    }
+    public void setB(int b){
+        ruleB = b;
+        System.out.println("Setting B: " + b);
+    }
+    public void setS(int s){
+        ruleS = s;
+        System.out.println("Setting S: " + s);
+    }
+    public void setcellPos(String cellpos){
+        cellPos = cellpos;
+        System.out.println("Setting cellPos: " + cellpos);
+    }
+}
 
 }
 
