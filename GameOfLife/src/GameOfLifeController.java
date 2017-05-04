@@ -23,6 +23,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -268,10 +269,10 @@ public class GameOfLifeController implements Initializable {
         }
     }
 
-    public void draw() {
-        for (int i = 1; i < grid.length; i++) {
-            for (int j = 1; j < grid[i].length; j++) {
-                if (grid[i][j] == 1) {//kan hende importert array er større enn grid[][]
+    public void draw() throws NullPointerException,IllegalArgumentException, IndexOutOfBoundsException {
+        for (int i = 1; i < dynamicBoard.dynoBoard.size(); i++) {
+            for (int j = 1; j < dynamicBoard.dynoBoard.get(i).size(); j++) {
+                if (dynamicBoard.dynoBoard.get(i).get(j) == 1) {//kan hende importert array er større enn grid[][]
                     gc.fillRect(i * (cellSize), j * (cellSize), cellSize, cellSize);
                 } else {
 
@@ -312,12 +313,12 @@ public class GameOfLifeController implements Initializable {
         }
     }
 
-    public void showPreviewPattern(byte[][] previewArray) {
+    public void showPreviewPattern(ArrayList<ArrayList<Integer>> previewArray) {
         fileGc.clearRect(0, 0, fileCanvas.getWidth(), fileCanvas.getHeight());
         showPreviewLines();
-        for (int i = 1; i < previewArray.length; i++) {
-            for (int j = 1; j < previewArray[i].length; j++) {
-                if (grid[i][j] == 1) {//kan hende importert array er større enn grid[][]
+        for (int i = 1; i < previewArray.size(); i++) {
+            for (int j = 1; j < previewArray.get(i).size(); j++) {
+                if (dynamicBoard.dynoBoard.get(i).get(j) == 1) {//kan hende importert array er større enn grid[][]
                     fileGc.fillRect(i * (cellSize), j * (cellSize), cellSize, cellSize);
                 } else {
 
@@ -406,12 +407,12 @@ public class GameOfLifeController implements Initializable {
             FileReader fileReader = new FileReader(file);
             newArray();
             if(file.getName().endsWith(".txt")) {
-                grid = fh.goThroughFile(fileReader, grid);
-                showPreviewPattern(grid);
+                dynamicBoard.dynoBoard = fh.goThroughFile(fileReader, dynamicBoard.dynoBoard);
+                showPreviewPattern(dynamicBoard.dynoBoard);
                 clearCanvas();
             }else if(file.getName().endsWith(".rle")){
-                grid = fh.goThroughFile(fileReader, grid);
-                showPreviewPattern(grid);
+                dynamicBoard.dynoBoard = fh.readRleFile(fileReader, dynamicBoard.dynoBoard);
+                showPreviewPattern(dynamicBoard.dynoBoard);
                 clearCanvas();
             }
         }
@@ -491,6 +492,6 @@ public class GameOfLifeController implements Initializable {
     @FXML
     public void Save() throws IOException {
         regButtonClick();
-        fh.saveAFile(grid);
+        fh.saveAFile(dynamicBoard.dynoBoard);
     }
 }

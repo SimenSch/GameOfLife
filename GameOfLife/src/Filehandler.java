@@ -30,8 +30,8 @@ public class Filehandler {
                 } else {
                     for (int i = 0; i < charreadLine.length; i++) {
                         if (charreadLine[i] == 'O') {
-                            if (i + plussX < FileArray.length && Yplace + plussY < FileArray[i].length) {
-                                FileArray[i + plussX][Yplace + plussY] = 1;
+                            if (i + plussX < FileArray.size() && Yplace + plussY < FileArray.get(i).size()) {
+                                FileArray.get(i + plussX).set(Yplace + plussY, 1);
                             }
                         } else if (charreadLine[i] == '.') {
                         }
@@ -48,7 +48,7 @@ public class Filehandler {
 
     }
 
-    public int[][] readRleFile(FileReader file, int[][] FileArray) throws IOException {
+    public ArrayList<ArrayList<Integer>> readRleFile(FileReader file, ArrayList<ArrayList<Integer>> FileArray) throws IOException {
         glc = new GameOfLifeController();
         char[] charreadLine;
         char[] numbers = new char[3];
@@ -72,30 +72,30 @@ public class Filehandler {
                                 numberToUse = Integer.parseInt(String.valueOf(numbers));
                                 if (numberToUse > 0) {
                                     while (numberToUse < 0) {
-                                        if (i + plussX + numberToUse< FileArray.length && Yplace + plussY < FileArray[i].length) {
-                                            FileArray[i + plussX + numberToUse][Yplace + plussY] = 1;
+                                        if (i + plussX + numberToUse< FileArray.size() && Yplace + plussY < FileArray.get(i).size()) {
+                                            FileArray.get(i + plussX + numberToUse).set(Yplace + plussY,1);
                                         }
                                         numberToUse--;
                                     }
                                 }
                                 else{
-                                    if (i + plussX < FileArray.length && Yplace + plussY < FileArray[i].length) {
-                                        FileArray[i + plussX ][Yplace + plussY] = 1;
+                                    if (i + plussX < FileArray.size() && Yplace + plussY < FileArray.get(i).size()) {
+                                        FileArray.get(i + plussX).set(Yplace + plussY, 1);
                                     }
                                 }
                             } else if (charreadLine[i] == 'b') {
                                 numberToUse = Integer.parseInt(String.valueOf(numbers));
                                 if (numberToUse > 0) {
                                     while (numberToUse < 0) {
-                                        if (i + plussX + numberToUse < FileArray.length && Yplace + plussY < FileArray[i].length) {
-                                            FileArray[i + plussX + numberToUse][Yplace + plussY] = 0;
+                                        if (i + plussX + numberToUse < FileArray.size() && Yplace + plussY < FileArray.get(i).size()) {
+                                            FileArray.get(i + plussX + numberToUse).set(Yplace + plussY,0);
                                         }
                                         numberToUse--;
                                     }
                                 }
                                 else{
-                                    if (i + plussX < FileArray.length && Yplace + plussY < FileArray[i].length) {
-                                        FileArray[i + plussX][Yplace + plussY] = 0;
+                                    if (i + plussX < FileArray.size() && Yplace + plussY < FileArray.get(i).size()) {
+                                        FileArray.get(i + plussX).set(Yplace + plussY, 0);
                                     }
                                 }
                             } else if (charreadLine[i] == ('$')) {
@@ -118,7 +118,7 @@ public class Filehandler {
     }
 
 
-    public void saveAFile(int[][] saveFile) throws IOException {
+    public void saveAFile(ArrayList<ArrayList<Integer>> saveFile) throws IOException {
         FilePath = "GameOfLife/src/files/";
         Filename = "test";
         Filetype = ".txt";
@@ -130,10 +130,10 @@ public class Filehandler {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FilePath + Filename + Filetype))) {
             bw.write(content);
             bw.newLine();
-            for (int i = 0; i < saveFile[1].length; i++) {
+            for (int i = 0; i < saveFile.get(1).size(); i++) {
                 FilePattern = "";
-                for (int j = 0; j < saveFile.length; j++) {
-                    if (saveFile[j][i] == 1) {
+                for (int j = 0; j < saveFile.size(); j++) {
+                    if (saveFile.get(j).get(i) == 1) {
                         FilePattern += "0";
                     } else {
                         FilePattern += ".";
