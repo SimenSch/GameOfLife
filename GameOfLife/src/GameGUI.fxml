@@ -130,12 +130,12 @@
                 <Button fx:id="mPlay" layoutX="116.0" layoutY="408.0" mnemonicParsing="false" onAction="#playSound" prefHeight="25.0" prefWidth="51.0" text="Play" />
                 <MenuButton layoutX="34.0" layoutY="227.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Choose Rules">
                     <items>
-                        <RadioMenuItem fx:id="rule1" mnemonicParsing="false" selected="true" text="Regular Rules" toggleGroup="$rulegroup">
+                        <RadioMenuItem fx:id="rule1" mnemonicParsing="false" selected="true" text="Conway's Life" toggleGroup="$rulegroup">
                             <toggleGroup>
                                 <ToggleGroup fx:id="rulegroup" />
                             </toggleGroup>
                         </RadioMenuItem>
-                        <RadioMenuItem fx:id="rule2" mnemonicParsing="false" text="Unique Rules" toggleGroup="$rulegroup" />
+                        <RadioMenuItem fx:id="rule2" mnemonicParsing="false" text="Life without Death" toggleGroup="$rulegroup" />
                     </items>
                 </MenuButton>
             <MenuButton layoutX="35.0" layoutY="318.0" mnemonicParsing="false" text="Choose Board">
