@@ -195,10 +195,10 @@ public class GameOfLifeController implements Initializable {
         canvasBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                int x1 = (int) event.getX() / cellSize;
-                int y1 = (int) event.getY() / cellSize;
-                if(x1<grid.length && y1< grid[1].length){
-                    grid[x1][y1] = 1;
+                int x1 = (int)event.getX() / cellSize;
+                int y1 = (int)event.getY() / cellSize;
+                if(x1<dynamicBoard.dynoBoard.size() && y1< dynamicBoard.dynoBoard.get(1).size()){
+                    dynamicBoard.dynoBoard.get(x1).set(y1, 1);
                 }
 
                 gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
@@ -209,9 +209,9 @@ public class GameOfLifeController implements Initializable {
             public void handle(MouseEvent event) {
                 int x1 = (int) event.getX() / cellSize;
                 int y1 = (int) event.getY() / cellSize;
-                if (y1 < grid[1].length && x1 < grid.length && y1 >= 0 && x1 >= 0) {
-                    if (grid[x1][y1] == 0) {
-                        grid[x1][y1] = 1;
+                if (y1 < dynamicBoard.dynoBoard.get(1).size() && x1 < dynamicBoard.dynoBoard.size() && y1 >= 0 && x1 >= 0) {
+                    if (dynamicBoard.dynoBoard.get(x1).get(y1) == 0) {
+                        dynamicBoard.dynoBoard.get(x1).set(y1, 1);
                         gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
                     }
                 }
@@ -237,7 +237,7 @@ public class GameOfLifeController implements Initializable {
                     if (runner) {
                         backgroundClick.play();
                         long start = System.currentTimeMillis();
-                        rule.nextGeneration();
+                        dynamicBoard.nextDynoGeneration();
                         clearCanvas();
                         draw();
                         long elapsed = System.currentTimeMillis() - start;

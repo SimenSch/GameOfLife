@@ -9,12 +9,12 @@ public class DynamicBoard {
 
     public int connector;
     public GameOfLifeController glc =new GameOfLifeController();
-    private List<ArrayList<Integer>> dynoBoard = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> dynoBoard = new ArrayList<>();
 
     public DynamicBoard(int x, int y) {
 
         for (int i = 0; i < x; i++) {
-            ArrayList<Integer> temp = new ArrayList<Integer>();
+            ArrayList<Integer> temp = new ArrayList<>();
 
             for (int j = 0; j < y; j++) {
                 temp.add(0);
@@ -58,16 +58,17 @@ public class DynamicBoard {
 
 
     protected void nextDynoGeneration() {
-        ArrayList<Integer> nextDynoBoard = new ArrayList<>() ;
+
         for (int i = 1; i < glc.x; i++) {
             for (int j = 1; j < glc.y; j++) {
-                if (rules(glc.grid[i][j], countNeightbours(i, j), ruleSet) == 1) {
+                if (rules(dynoBoard.get(i).get(j) , countNeightbours(i, j), ruleSet) == 1) {
 
-                    nextGrid[i][j] = 1;
-                } else ;
+                    dynoBoard.get(i).set(j, 1);
+
+                }
             }
         }
-        glc.grid = nextGrid;
+
     }
 
     private int rules(int alive, int connector, String ruleSet) {
@@ -109,60 +110,60 @@ public class DynamicBoard {
         connector = 0;
 
         if(i==0 && j==0){
-            if (glc.grid[i][j + 1] == 1) {
+            if (dynoBoard.get(i).get(j+1) == 1) {
                 connector++;
             }
 
-            if (glc.grid[i + 1][j] == 1) {
+            if (dynoBoard.get(i + 1).get(j) == 1) {
                 connector++;
             }
-            if (glc.grid[i + 1][j + 1] == 1) {
+            if (dynoBoard.get(i + 1).get(j+ 1) == 1) {
                 connector++;
             }
 
         }
         if(i==0 && j>1&&j<glc.y-1){
-            if (glc.grid[i][j + 1] == 1) {
+            if (dynoBoard.get(i).get(j +1) == 1) {
                 connector++;
             }
-            if (glc.grid[i][j - 1] == 1) {
+            if (dynoBoard.get(i).get(j -1) == 1) {
                 connector++;
             }
-            if (glc.grid[i + 1][j] == 1) {
+            if (dynoBoard.get(i + 1).get(j) == 1) {
                 connector++;
             }
-            if (glc.grid[i + 1][j + 1] == 1) {
+            if (dynoBoard.get(i + 1).get(j + 1) == 1) {
                 connector++;
             }
-            if (glc.grid[i + 1][j - 1] == 1) {
+            if (dynoBoard.get(i + 1).get(j - 1) == 1) {
                 connector++;
             }
         }
 
         if (i > 0 && j > 0 && i < glc.x -1 && j < glc.y -1) {
 
-            if (glc.grid[i - 1][j] == 1) {
+            if (dynoBoard.get(i - 1).get(j) == 1) {
                 connector++;
             }
-            if (glc.grid[i - 1][j + 1] == 1) {
+            if (dynoBoard.get(i - 1).get(j + 1) == 1) {
                 connector++;
             }
-            if (glc.grid[i - 1][j - 1] == 1) {
+            if (dynoBoard.get(i - 1).get(j - 1) == 1) {
                 connector++;
             }
-            if (glc.grid[i][j + 1] == 1) {
+            if (dynoBoard.get(i).get(j +1) == 1) {
                 connector++;
             }
-            if (glc.grid[i][j - 1] == 1) {
+            if (dynoBoard.get(i).get(j-1) == 1) {
                 connector++;
             }
-            if (glc.grid[i + 1][j] == 1) {
+            if (dynoBoard.get(i + 1).get(j) == 1) {
                 connector++;
             }
-            if (glc.grid[i + 1][j + 1] == 1) {
+            if (dynoBoard.get(i + 1).get(j + 1) == 1) {
                 connector++;
             }
-            if (glc.grid[i + 1][j - 1] == 1) {
+            if (dynoBoard.get(i + 1).get(j - 1) == 1) {
                 connector++;
             }
         }
