@@ -63,7 +63,7 @@ public class GameOfLifeController implements Initializable {
     public boolean runner;
     public boolean musc;
     public boolean set;
-    public Rules rule;
+
     public GraphicsContext gc;
     public GraphicsContext gc2;
     public GraphicsContext fileGc;
@@ -71,7 +71,7 @@ public class GameOfLifeController implements Initializable {
     public int x;
     public int y;
     public int cellSize;
-    public byte[][] grid;
+   // public byte[][] grid;
     public Filehandler saveAFile;
     public String background = "GameOfLife/src/Sounds/epic menu music.Wav";
     public Media backgroundSound = new Media(new File(background).toURI().toString());
@@ -79,7 +79,7 @@ public class GameOfLifeController implements Initializable {
     Timer timer;
     GolSSCG main;
     GameOfLifeController glc;
-    DynamicBoard dynamicBoard;
+    public DynamicBoard dynamicBoard;
 
     public GameOfLifeController() {
     }
@@ -91,17 +91,21 @@ public class GameOfLifeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        rule = new Rules(this);
+        cellSize = 10;
+        x = (int) canvas.getWidth() / cellSize;
+        y = (int) canvas.getHeight() / cellSize;
+        dynamicBoard = new DynamicBoard(x, y);
+        System.out.println(dynamicBoard.dynoBoard.get(1).get(1));
+        //rule = new Rules(this);
         glc = new GameOfLifeController();
         main = new GolSSCG();
         fh = new Filehandler();
-        cellSize = 10;
-        rule.setRuleSet("regular");
-        x = (int) canvas.getWidth() / cellSize;
-        y = (int) canvas.getHeight() / cellSize;
-        grid = new byte[x][y];
 
-       // dynamicBoard = new DynamicBoard(x, y);
+        dynamicBoard.setRuleSet("regular");
+
+        //grid = new byte[x][y];
+
+
 
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.ORANGE);
@@ -115,6 +119,8 @@ public class GameOfLifeController implements Initializable {
         drawGrid();
         draw();
 
+
+
         System.out.println("Working Directory = " +
                 System.getProperty("user.dir"));
 
@@ -122,7 +128,7 @@ public class GameOfLifeController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 regButtonClick();
-                rule.setRuleSet("regular");
+                dynamicBoard.setRuleSet("regular");
             }
         });
 
@@ -130,7 +136,7 @@ public class GameOfLifeController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 regButtonClick();
-                rule.setRuleSet("special");
+                dynamicBoard.setRuleSet("special");
             }
         });
 
@@ -205,7 +211,7 @@ public class GameOfLifeController implements Initializable {
                 gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
             }
         });
-        canvasBack.setOnMouseDragged(new EventHandler<MouseEvent>() {
+        canvasBack.setOnMouseDragged(new EventHandler<MouseEvent>()  {
             @Override
             public void handle(MouseEvent event) {
                 int x1 = (int) event.getX() / cellSize;
@@ -238,7 +244,7 @@ public class GameOfLifeController implements Initializable {
                     if (runner) {
                         backgroundClick.play();
                         long start = System.currentTimeMillis();
-                        dynamicBoard.nextDynoGeneration();
+                        dynamicBoard.nextDynoGeneration(x, y);
                         clearCanvas();
                         draw();
                         long elapsed = System.currentTimeMillis() - start;
@@ -269,7 +275,7 @@ public class GameOfLifeController implements Initializable {
         }
     }
 
-    public void draw() throws NullPointerException,IllegalArgumentException, IndexOutOfBoundsException {
+    public void draw() {
         for (int i = 1; i < dynamicBoard.dynoBoard.size(); i++) {
             for (int j = 1; j < dynamicBoard.dynoBoard.get(i).size(); j++) {
                 if (dynamicBoard.dynoBoard.get(i).get(j) == 1) {//kan hende importert array er større enn grid[][]
@@ -285,13 +291,13 @@ public class GameOfLifeController implements Initializable {
     public void newArray() {
         x = 5 + (int) canvas.getWidth() / cellSize;
         y = 5 + (int) canvas.getHeight() / cellSize;
-        grid = new byte[x][y];
+        dynamicBoard = new DynamicBoard(x, y);
     }
 
     public void reset() {
         clearButtonClick();
         clearCanvas();
-        grid = new byte[x][y];
+        dynamicBoard.dynoBoard = new ArrayList<>(dynamicBoard.dynoBoard);
 
     }
 

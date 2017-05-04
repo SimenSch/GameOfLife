@@ -9,7 +9,9 @@ public class DynamicBoard {
 
     public int connector;
     public GameOfLifeController glc =new GameOfLifeController();
+
     public ArrayList<ArrayList<Integer>> dynoBoard = new ArrayList<>();
+
 
     public DynamicBoard(int x, int y) {
 
@@ -24,12 +26,9 @@ public class DynamicBoard {
         }
     }
 
-//        dynoBoard.get(10).get(5) == 1;
-//        board[10][5] == 1
-//
-//
-//        dynoBoard.get(40).set(30, 1 );
-//        board[40][30] = 1;
+
+
+
         public void expand(int x, int y) {
             for (int i = 0; i < x; i++) {
                 if (dynoBoard.get(i).get(0) == 1) {
@@ -57,18 +56,29 @@ public class DynamicBoard {
 
 
 
-    protected void nextDynoGeneration() {
+    protected void nextDynoGeneration(int x, int y) {
+         ArrayList<ArrayList<Integer>> nextDynoBoard = new ArrayList<>();
+        for (int i = 0; i < x; i++) {
+            ArrayList<Integer> temp = new ArrayList<>();
 
-        for (int i = 1; i < glc.x; i++) {
-            for (int j = 1; j < glc.y; j++) {
+            for (int j = 0; j < y; j++) {
+                temp.add(0);
+            }
+
+            nextDynoBoard.add(temp);
+        }
+        for (int i = 1; i < x; i++) {
+            for (int j = 1; j < y; j++) {
                 if (rules(dynoBoard.get(i).get(j) , countNeightbours(i, j), ruleSet) == 1) {
 
-                    dynoBoard.get(i).set(j, 1);
-
+                    nextDynoBoard.get(i).set(j, 1);
+                    System.out.println(nextDynoBoard.get(i).get(j));
                 }
-            }
-        }
 
+            }
+
+        }
+        dynoBoard = nextDynoBoard;
     }
 
     private int rules(int alive, int connector, String ruleSet) {
@@ -109,7 +119,7 @@ public class DynamicBoard {
     protected int countNeightbours(int i, int j) {
         connector = 0;
 
-        if(i==0 && j==0){
+     /*   if(i==0 && j==0){
             if (dynoBoard.get(i).get(j+1) == 1) {
                 connector++;
             }
@@ -139,7 +149,7 @@ public class DynamicBoard {
                 connector++;
             }
         }
-
+*/
         if (i > 0 && j > 0 && i < glc.x -1 && j < glc.y -1) {
 
             if (dynoBoard.get(i - 1).get(j) == 1) {
@@ -168,6 +178,7 @@ public class DynamicBoard {
             }
         }
         return connector;
+
     }
     public void DynamicGeneration(){
 

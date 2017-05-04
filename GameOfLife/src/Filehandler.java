@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Filehandler {
 
 
-    public Rules rule;
+
     public GameOfLifeController glc;
     private String Filename, Filetype, FilePath, FilePattern;
 
