@@ -78,6 +78,7 @@ public class GameOfLifeController implements Initializable {
     Timer timer;
     GolSSCG main;
     GameOfLifeController glc;
+    DynamicBoard dynamicBoard;
 
     public GameOfLifeController() {
     }
@@ -95,9 +96,12 @@ public class GameOfLifeController implements Initializable {
         fh = new Filehandler();
         cellSize = 10;
         rule.setRuleSet("regular");
-        x = 5 + (int) canvas.getWidth() / cellSize;
-        y = 5 + (int) canvas.getHeight() / cellSize;
+        x = (int) canvas.getWidth() / cellSize;
+        y = (int) canvas.getHeight() / cellSize;
         grid = new byte[x][y];
+
+        dynamicBoard = new DynamicBoard(x, y);
+
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.ORANGE);
         gc2 = canvasBack.getGraphicsContext2D();
@@ -205,8 +209,7 @@ public class GameOfLifeController implements Initializable {
             public void handle(MouseEvent event) {
                 int x1 = (int) event.getX() / cellSize;
                 int y1 = (int) event.getY() / cellSize;
-                //gc.setFill(Color.CRIMSON);
-                if (y1 < grid[1].length && x1 < grid.length && y1 > 0 && x1 > 0) {
+                if (y1 < grid[1].length && x1 < grid.length && y1 >= 0 && x1 >= 0) {
                     if (grid[x1][y1] == 0) {
                         grid[x1][y1] = 1;
                         gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
