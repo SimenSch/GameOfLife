@@ -25,8 +25,8 @@ public class DynamicBoard {
     }
 
         public void fullscreenExpand() {
-            int x = (int) glc.canvas.getWidth() / glc.cellSize- dynoBoard.size();
-            int y = (int) glc.canvas.getHeight() / glc.cellSize-dynoBoard.get(0).size();
+            int x = (int) glc.canvas.getWidth() / glc.cellSize;
+            int y = (int) glc.canvas.getHeight() / glc.cellSize;
             for (int i = 0; i < x; i++) {
                 ArrayList<Integer> temp = new ArrayList<>();
                 for (int j = 0; j < y; j++) {

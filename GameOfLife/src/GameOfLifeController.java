@@ -75,7 +75,10 @@ public class GameOfLifeController implements Initializable {
     public Filehandler fh;
     public int x;
     public int y;
-    public int cellSize;
+
+
+
+    public int cellSize =10;
     // public byte[][] grid;
     public Filehandler saveAFile;
     public String background = "GameOfLife/src/Sounds/epic menu music.Wav";
@@ -94,9 +97,10 @@ public class GameOfLifeController implements Initializable {
         this.cellSize = cellSize;
     }
 
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cellSize = 10;
+
         x = (int) canvas.getWidth() / cellSize;
         y = (int) canvas.getHeight() / cellSize;
         dynamicBoard = new DynamicBoard(x, y);
@@ -153,6 +157,7 @@ public class GameOfLifeController implements Initializable {
                 canvas.setHeight(1440);
                 canvasBack.setWidth(2560);
                 canvasBack.setHeight(1440);
+                dynamicBoard.fullscreenExpand();
                 clearGrid();
                 drawGrid();
                 //newArray();
