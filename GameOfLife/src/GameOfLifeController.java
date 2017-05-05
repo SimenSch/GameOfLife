@@ -368,7 +368,6 @@ public class GameOfLifeController implements Initializable {
     public void reset() {
         clearButtonClick();
         clearCanvas();
-
         dynamicBoard.dynoBoard = new ArrayList<>(dynamicBoard.dynoBoard);
 
     }
@@ -384,7 +383,7 @@ public class GameOfLifeController implements Initializable {
      * fjerner alt i canvas av farger
      */
     public void clearCanvas() {
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.clearRect(0, 0, canvasBack.getWidth(), canvasBack.getHeight());
 
     }
 
