@@ -14,7 +14,15 @@ public class Filehandler {
     public GameOfLifeController glc;
     private String Filename, Filetype, FilePath, FilePattern;
 
-
+    /**
+     * denne metoden går gjennom filer slik at man kan velge en fil til å bruke i Spillbrettet
+     * @param file fil man velger
+     * file File
+     * @param FileArray
+     * @return
+     * Filarray Array
+     * @throws IOException
+     */
     public ArrayList<ArrayList<Integer>> goThroughFile(FileReader file, ArrayList<ArrayList<Integer>> FileArray) throws IOException {
         glc = new GameOfLifeController();
         System.out.println(glc.x + "," + glc.y);
@@ -48,6 +56,14 @@ public class Filehandler {
 
     }
 
+    /**
+     * her leses en RLE fil
+     * @param file Fil man har valgt
+     * @param FileArray Filarray man bruker i spillbrettet, ferdigparset
+     * @return
+     * fileArray Array
+     * @throws IOException
+     */
     public ArrayList<ArrayList<Integer>> readRleFile(FileReader file, ArrayList<ArrayList<Integer>> FileArray) throws IOException {
         glc = new GameOfLifeController();
         char[] charreadLine;
@@ -117,7 +133,11 @@ public class Filehandler {
         return FileArray;
     }
 
-
+    /**
+     * Exporterer et mønster fra spillebrettet og legger det i en fil
+     * @param saveFile
+     * @throws IOException
+     */
     public void saveAFile(ArrayList<ArrayList<Integer>> saveFile) throws IOException {
         FilePath = "GameOfLife/src/files/";
         Filename = "test";

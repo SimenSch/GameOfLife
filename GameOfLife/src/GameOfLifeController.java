@@ -85,11 +85,24 @@ public class GameOfLifeController implements Initializable {
     GameOfLifeController glc;
     public DynamicBoard dynamicBoard;
     Timeline tLine;
+
+    /**
+     * Construktør
+     */
     public GameOfLifeController() {
     }
+
+    /**
+     * Setter cellestørrelsen på brettet
+     * @param cellSize
+     */
     public void setCellSize(int cellSize) {
         this.cellSize = cellSize;
     }
+
+    /**
+     * setter skjermen til normal størrelse inkludert Brettstørrelsen
+     */
     public void setNormalScreen(){
         canvas.setWidth(957.0);
         canvas.setHeight(757.0);
@@ -101,6 +114,10 @@ public class GameOfLifeController implements Initializable {
         dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
         //newArray();
     }
+
+    /**
+     * Setter brettet til full størrelse #FEIL i denne, vi fikk ikke til å sette rader riktig under.
+     */
     public void setFullscreen(){
         Stage stage = (Stage) aPane.getScene().getWindow();
         double canvasHeight = stage.getHeight();
@@ -113,11 +130,14 @@ public class GameOfLifeController implements Initializable {
         clearGrid();
         drawGrid();
         dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
-        dynamicBoard.addRowBottom();
+
     }
 
 
     @Override
+    /**
+     * Initializeren
+     */
     public void initialize(URL url, ResourceBundle rb) {
         x = (int) canvas.getWidth() / cellSize;
         y = (int) canvas.getHeight() / cellSize;
@@ -146,6 +166,9 @@ public class GameOfLifeController implements Initializable {
 
         rule1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
+            /**
+             * Setter regler
+             */
             public void handle(ActionEvent event) {
                 regButtonClick();
                 dynamicBoard.setRuleSet("regular");
@@ -154,6 +177,9 @@ public class GameOfLifeController implements Initializable {
 
         rule2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
+            /**
+             * setter regler
+             */
             public void handle(ActionEvent event) {
                 regButtonClick();
                 dynamicBoard.setRuleSet("special");
@@ -162,6 +188,9 @@ public class GameOfLifeController implements Initializable {
 
         fullScreen.setOnAction(new EventHandler<ActionEvent>() {
             @Override
+            /**
+             * setter fullescreen
+             */
             public void handle(ActionEvent event) throws NullPointerException{
                 regButtonClick();
                 Stage stage = (Stage) aPane.getScene().getWindow();
@@ -173,6 +202,9 @@ public class GameOfLifeController implements Initializable {
 
         NormalWindow.setOnAction(new EventHandler<ActionEvent>() {
             @Override
+            /**
+             * setter normalScreen
+             */
             public void handle(ActionEvent event) {
                 regButtonClick();
                 Stage stage = (Stage) aPane.getScene().getWindow();
@@ -182,6 +214,10 @@ public class GameOfLifeController implements Initializable {
         });
                 /* Color Menu */
         Orange.setOnAction(new EventHandler<ActionEvent>() {
+            /**
+             * fargevelger
+             * @param t
+             */
             public void handle(ActionEvent t) {
                 regButtonClick();
                 clearGrid();
@@ -196,6 +232,10 @@ public class GameOfLifeController implements Initializable {
             }
         });
         BW.setOnAction(new EventHandler<ActionEvent>() {
+            /**
+             * Svart hvitt velger
+             * @param t
+             */
             public void handle(ActionEvent t) {
                 regButtonClick();
                 clearGrid();
@@ -217,6 +257,9 @@ public class GameOfLifeController implements Initializable {
 
         canvasBack.setOnMouseClicked(new EventHandler<MouseEvent>()  {
             @Override
+            /**
+             * setter celle i live ved klikk
+             */
             public void handle(MouseEvent event) throws IndexOutOfBoundsException, NullPointerException{
                 int x1 = (int) event.getX() / cellSize;
                 int y1 = (int) event.getY() / cellSize;
@@ -229,7 +272,7 @@ public class GameOfLifeController implements Initializable {
 
                 else if(x1 == dynamicBoard.dynoBoard.size() || y1 == dynamicBoard.dynoBoard.get(0).size()){
                     System.out.println("expand board");
-                    dynamicBoard.expand(x1,y1);
+
                     System.out.println(dynamicBoard.dynoBoard.get(x1).get(y1));
                     gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
                 }
@@ -237,6 +280,9 @@ public class GameOfLifeController implements Initializable {
         });
         canvasBack.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
+            /**
+             * tegnemetode kan brukes under spillets gang
+             */
             public void handle(MouseEvent event) {
                 int x1 = (int) event.getX() / cellSize;
                 int y1 = (int) event.getY() / cellSize;
@@ -251,6 +297,9 @@ public class GameOfLifeController implements Initializable {
     }
 
     @FXML
+    /**
+     * startmetoden
+     */
     public void start() throws IndexOutOfBoundsException{
         if ("Start".equals(start.getText())) {
             startButtonClick();
@@ -285,7 +334,9 @@ public class GameOfLifeController implements Initializable {
 
     }
 
-
+    /**
+     * tegner griddet slik at man ikke må gjøre det hver iterasjon
+     */
     public void drawGrid() {
         for (double i = 0; i < canvas.getWidth(); i++) {
             for (double j = 0; j < canvas.getHeight(); j++) {
@@ -294,6 +345,9 @@ public class GameOfLifeController implements Initializable {
         }
     }
 
+    /**
+     * sjekker om en celle er levenede eller død, fargelegger
+     */
     public void draw() {
         for (int i = 1; i < dynamicBoard.dynoBoard.size(); i++) {
             for (int j = 1; j < dynamicBoard.dynoBoard.get(i).size(); j++) {
@@ -307,29 +361,36 @@ public class GameOfLifeController implements Initializable {
         }
     }
 
-    public void newArray() {
-        x = (int) canvas.getWidth() / cellSize;
-        y = (int) canvas.getHeight() / cellSize;
 
-    }
-
+    /**
+     * Resetter arraylisten
+     */
     public void reset() {
         clearButtonClick();
         clearCanvas();
+
         dynamicBoard.dynoBoard = new ArrayList<>(dynamicBoard.dynoBoard);
 
     }
 
+    /**
+     * fjerner alle farger i grid
+     */
     public void clearGrid() {
         gc2.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
-
+    /**
+     * fjerner alt i canvas av farger
+     */
     public void clearCanvas() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
     }
 
-
+    /**
+     * Viser griddet i preview
+     */
     public void showPreviewLines() {
         for (double i = 0; i < fileCanvas.getWidth(); i++) {
             for (double j = 0; j < fileCanvas.getHeight(); j++) {
@@ -338,6 +399,10 @@ public class GameOfLifeController implements Initializable {
         }
     }
 
+    /**
+     * denne viser fargeleggingen over Griddet i showPreviewlines
+     * @param previewArray
+     */
     public void showPreviewPattern(ArrayList<ArrayList<Integer>> previewArray) {
         fileGc.clearRect(0, 0, fileCanvas.getWidth(), fileCanvas.getHeight());
         showPreviewLines();
@@ -353,27 +418,27 @@ public class GameOfLifeController implements Initializable {
         }
     }
 
+    /**
+     * Musikk til knapp
+     */
     public void clearButtonClick() {
         String standarButton = "GameOfLife/src/Sounds/clearClick2.mp3";
         Media buttonSound = new Media(new File(standarButton).toURI().toString());
         MediaPlayer buttonClick = new MediaPlayer(buttonSound);
         buttonClick.play();
     }
-
-    public void menuButtonClick() {
-        String standarButton = "GameOfLife/src/Sounds/clickSound.mp3";
-        Media buttonSound = new Media(new File(standarButton).toURI().toString());
-        MediaPlayer buttonClick = new MediaPlayer(buttonSound);
-        buttonClick.play();
-    }
-
+    /**
+     * Musikk til knapp
+     */
     public void tinyButtonClick() {
         String standarButton = "GameOfLife/src/Sounds/tinyButton.mp3";
         Media buttonSound = new Media(new File(standarButton).toURI().toString());
         MediaPlayer buttonClick = new MediaPlayer(buttonSound);
         buttonClick.play();
     }
-
+    /**
+     * Musikk til knapp
+     */
     public void pauseButtonClick() {
         String standarButton = "GameOfLife/src/Sounds/clickOff.mp3";
         Media buttonSound = new Media(new File(standarButton).toURI().toString());
@@ -381,14 +446,18 @@ public class GameOfLifeController implements Initializable {
         buttonClick.play();
 
     }
-
+    /**
+     * Musikk til knapp
+     */
     public void regButtonClick() {
         String standarButton = "GameOfLife/src/Sounds/StandarButton.mp3";
         Media buttonSound = new Media(new File(standarButton).toURI().toString());
         MediaPlayer buttonClick = new MediaPlayer(buttonSound);
         buttonClick.play();
     }
-
+    /**
+     * Musikk til knapp
+     */
     public void startButtonClick() {
         String standarButton = "GameOfLife/src/Sounds/clickOn.mp3";
 
@@ -399,7 +468,9 @@ public class GameOfLifeController implements Initializable {
 
 
     }
-
+    /**
+     * muter musikk
+     */
     public void playSound() {
         if(soundIsMuted) {
             backgroundClick.setVolume(1);
@@ -413,13 +484,16 @@ public class GameOfLifeController implements Initializable {
 
 
     @FXML
+    /**
+     * knapp til å velge fil å importere
+     */
     protected void fileImport(ActionEvent event) throws NullPointerException, IOException, NumberFormatException, InvocationTargetException {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Open File");
         File file = chooser.showOpenDialog(new Stage());
         if (file != null) {
             FileReader fileReader = new FileReader(file);
-            newArray();
+
             if (file.getName().endsWith(".txt")) {
                 dynamicBoard.dynoBoard = fh.goThroughFile(fileReader, dynamicBoard.dynoBoard);
                 showPreviewPattern(dynamicBoard.dynoBoard);
@@ -433,6 +507,9 @@ public class GameOfLifeController implements Initializable {
     }
 
     @FXML
+    /**
+     * åpner fil
+     */
     public void openFile(ActionEvent event) {
         regButtonClick();
         menuFile.setVisible(true);
@@ -444,6 +521,9 @@ public class GameOfLifeController implements Initializable {
     }
 
     @FXML
+    /**
+     * lukker filbehandler
+     */
     public void closeFile(ActionEvent event) {
         regButtonClick();
         menuFile.setVisible(false);
@@ -454,6 +534,9 @@ public class GameOfLifeController implements Initializable {
     }
 
     @FXML
+    /**
+     * Åpner menyen
+     */
     public void openMenu(ActionEvent event) {
         regButtonClick();
         menu.setVisible(true);
@@ -463,47 +546,53 @@ public class GameOfLifeController implements Initializable {
     }
 
     @FXML
+    /**
+     * velgere av cellestørrelse
+     */
     public void RadioButtons(ActionEvent event) {
         if (small.isSelected()) {
             setCellSize(3);
             tinyButtonClick();
             dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
-            dynamicBoard.addRowBottom();
+
         } else if (normal.isSelected()) {
             setCellSize(5);
             tinyButtonClick();
             dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
-            dynamicBoard.addRowBottom();
+
         } else if (large.isSelected()) {
             setCellSize(10);
             tinyButtonClick();
             dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
-            dynamicBoard.addRowBottom();
+
         } else if (large2.isSelected()) {
             setCellSize(20);
             tinyButtonClick();
             dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
-            dynamicBoard.addRowBottom();
+
         } else if (large3.isSelected()) {
             setCellSize(30);
             tinyButtonClick();
             dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
-            dynamicBoard.addRowBottom();
+
         } else {
             setCellSize(40);
             tinyButtonClick();
             dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
-            dynamicBoard.addRowBottom();
+
 
         }
         clearGrid();
         drawGrid();
         clearCanvas();
         draw();
-        newArray();
+
     }
 
     @FXML
+    /**
+     * appilerer det man har valgt
+     */
     public void Apply(ActionEvent event) {
         regButtonClick();
         menu.setVisible(false);
@@ -513,6 +602,9 @@ public class GameOfLifeController implements Initializable {
     }
 
     @FXML
+    /**
+     * lagrer filen du skal exportere
+     */
     public void Save() throws IOException {
         regButtonClick();
         fh.saveAFile(dynamicBoard.dynoBoard);

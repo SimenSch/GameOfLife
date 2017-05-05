@@ -12,7 +12,11 @@ public class DynamicBoard {
 
     public ArrayList<ArrayList<Integer>> dynoBoard = new ArrayList<>();
 
-
+    /**
+     *
+     * @param x Construktør for brett dynamisk eller ei.
+     * @param y Construktør for brett dynamisk eller ei
+     */
     public DynamicBoard(int x, int y) {
 
         for (int i = 0; i < x; i++) {
@@ -24,67 +28,56 @@ public class DynamicBoard {
         }
     }
 
+    /**
+     *  Gjør slik at brettet øker i trinn med bildet til bruker.
+     * @param x henter Canvas sin størrelse
+     * @param y henter canvas sin størrelse
+     * @throws NullPointerException
+     */
         public void fullscreenExpand(int x,int y) throws NullPointerException {
 
-            System.out.println(x);
 
+            for (int i = 0; i < x; i++) {
 
-            System.out.println(y);
+                ArrayList<Integer> temp = new ArrayList<>();
+                for (int j = 0; j < y; j++) {
+
+                    temp.add(0);
+
+                    dynoBoard.get(dynoBoard.size() - 1).add(j, 0);
+                }
+                dynoBoard.get(i).add(0);
+                dynoBoard.add(temp);
+            }
             for (int i = 0; i < x; i++) {
 
                 ArrayList<Integer> temp = new ArrayList<>();
                 for (int j = 0; j < y; j++) {
                     temp.add(0);
-                    dynoBoard.get(dynoBoard.size()-1).add(j, 0);
+                    dynoBoard.get(dynoBoard.size() - 1).add(j, 0);
                 }
-                dynoBoard.get(i).add(0);
-                dynoBoard.add(temp);
             }
+            for (int i = 0; i < y; i++) {
 
-                for (int j = 0; j < x; j++) {
-
-                    dynoBoard.get(j).add(0);
-
-                }
+                    ArrayList<Integer> newRow = new ArrayList<>();
 
 
+                    for (int j = 0; j < y; j++) {
 
-        }
-
-
-    /**
-     * Adds an empty column to the right of the board
-     */
-    /**
-     * Adds an empty row to the bottom of the board
-     */
-    public void addRowBottom(){
-        ArrayList<Integer> emptyRow = new ArrayList<>();
-        for(int i = 0; i < dynoBoard.get(0).size(); i++){
-            emptyRow.add(0);
-        }
-        dynoBoard.add(emptyRow);
-    }
-
-        public void expand(int x, int y) {
-            for (int i = 0; i < x; i++) {
-                if (dynoBoard.get(i).get(0) == 1) {
-
-
-                }
-                if (dynoBoard.get(i).get(y - 1) == 1) {
-
-                    for (int j = 0; j < x; j++) {
-                        dynoBoard.get(x).add(0);
+                        newRow.add(0);
                     }
-                }
+                    dynoBoard.add(newRow);
 
-            }
+
+                }
 
         }
 
 
-
+    /**
+     * Dette velger om vi skal ha conways eller life without death rulesett, se Rules
+     * @param ruleSet
+     */
     public void setRuleSet(String ruleSet) {
         this.ruleSet = ruleSet;
     }
@@ -92,7 +85,10 @@ public class DynamicBoard {
     String ruleSet;
 
 
-
+    /**
+     * Neste generasjon med dynamisk brett
+     * @throws IndexOutOfBoundsException
+     */
     protected void nextDynoGeneration() throws IndexOutOfBoundsException{
          int x = dynoBoard.size();
          int y = dynoBoard.get(0).size();
@@ -109,8 +105,14 @@ public class DynamicBoard {
     }
 
 
-
-
+    /**
+     *
+     * @param alive setter nabo til i live
+     * @param connector tester nabo
+     * @param ruleSet hvilke regelsett vi skal bruke conways eller life without death
+     * @return
+     * @throws IndexOutOfBoundsException
+     */
     private int rules(int alive, int connector, String ruleSet) throws IndexOutOfBoundsException{
 
         switch (ruleSet) {
@@ -145,41 +147,17 @@ public class DynamicBoard {
         return 0;
     }
 
-
+    /**
+     * teller naboer
+     * @param i forløkke 1
+     * @param j forløkke 2
+     * @return
+     * int Connector
+     * @throws IndexOutOfBoundsException
+     */
     protected int countNeightbours(int i, int j) throws IndexOutOfBoundsException{
         connector = 0;
 
-     /*   if(i==0 && j==0){
-            if (dynoBoard.get(i).get(j+1) == 1) {
-                connector++;
-            }
-
-            if (dynoBoard.get(i + 1).get(j) == 1) {
-                connector++;
-            }
-            if (dynoBoard.get(i + 1).get(j+ 1) == 1) {
-                connector++;
-            }
-
-        }
-        if(i==0 && j>1&&j<glc.y-1){
-            if (dynoBoard.get(i).get(j +1) == 1) {
-                connector++;
-            }
-            if (dynoBoard.get(i).get(j -1) == 1) {
-                connector++;
-            }
-            if (dynoBoard.get(i + 1).get(j) == 1) {
-                connector++;
-            }
-            if (dynoBoard.get(i + 1).get(j + 1) == 1) {
-                connector++;
-            }
-            if (dynoBoard.get(i + 1).get(j - 1) == 1) {
-                connector++;
-            }
-        }
-*/
         if (i > 1 && j > 1 && i < dynoBoard.size() -1 && j < dynoBoard.get(0).size() -1) {
 
             if (dynoBoard.get(i - 1).get(j) == 1) {
