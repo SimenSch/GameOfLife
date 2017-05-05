@@ -63,14 +63,22 @@ public class GameOfLifeController implements Initializable {
     public boolean runner;
     public boolean musc;
     public boolean set;
-
+    public int cellSize =10;
     public GraphicsContext gc;
     public GraphicsContext gc2;
     public GraphicsContext fileGc;
     public Filehandler fh;
     public int x;
     public int y;
-    public int cellSize;
+    public int setXSize(){
+        x = (int) canvas.getWidth() / cellSize;
+
+        return x;
+    }
+    public int setYSize() {
+        y = (int) canvas.getHeight() / cellSize;
+        return y;
+    }
    // public byte[][] grid;
     public Filehandler saveAFile;
     public String background = "GameOfLife/src/Sounds/epic menu music.Wav";
@@ -228,7 +236,8 @@ public class GameOfLifeController implements Initializable {
 
     @FXML
     public void start() {
-
+        x = (int) canvas.getWidth() / cellSize;
+        y = (int) canvas.getHeight() / cellSize;
 
         if ("Start".equals(start.getText())) {
             startButtonClick();
@@ -244,11 +253,11 @@ public class GameOfLifeController implements Initializable {
                     if (runner) {
                         backgroundClick.play();
                         long start = System.currentTimeMillis();
-                        dynamicBoard.nextDynoGeneration(x, y);
+                        dynamicBoard.nextDynoGeneration();
                         clearCanvas();
                         draw();
                         long elapsed = System.currentTimeMillis() - start;
-                        System.out.println("Time between frames (ms): " + elapsed); //it changes alot, this it's because the sound?
+                        System.out.println("Time between frames (ms): " + elapsed);
                     } else {
                         timer.cancel();
                         timer.purge();
@@ -291,7 +300,7 @@ public class GameOfLifeController implements Initializable {
     public void newArray() {
         x = 5 + (int) canvas.getWidth() / cellSize;
         y = 5 + (int) canvas.getHeight() / cellSize;
-        dynamicBoard = new DynamicBoard(x, y);
+        dynamicBoard.dynoBoard = new ArrayList<>(dynamicBoard.dynoBoard);
     }
 
     public void reset() {
