@@ -24,20 +24,17 @@ public class DynamicBoard {
         }
     }
 
-        public void fullscreenExpand(){
-            int x = (int) glc.canvas.getWidth() / glc.cellSize;
-            int y = (int) glc.canvas.getHeight() / glc.cellSize;
-            ArrayList<ArrayList<Integer>> nextDynoBoard = new ArrayList<>();
+        public void fullscreenExpand() {
+            int x = (int) glc.canvas.getWidth() / glc.cellSize- dynoBoard.size();
+            int y = (int) glc.canvas.getHeight() / glc.cellSize-dynoBoard.get(0).size();
             for (int i = 0; i < x; i++) {
-                nextDynoBoard.add(new ArrayList(x));
+                ArrayList<Integer> temp = new ArrayList<>();
                 for (int j = 0; j < y; j++) {
-
-
-                    nextDynoBoard.get(i).add(0);
+                    temp.add(0);
                 }
-            }
-            dynoBoard = nextDynoBoard;
+                dynoBoard.add(temp);
 
+            }
         }
 
 
