@@ -240,7 +240,7 @@ public class GameOfLifeController implements Initializable {
                 if (runner) {
                     backgroundClick.play();
                     long start = System.currentTimeMillis();
-                    dynamicBoard.nextDynoGeneration(x, y);
+                    dynamicBoard.nextDynoGeneration();
                     clearCanvas();
                     draw();
                     long elapsed = System.currentTimeMillis() - start;
