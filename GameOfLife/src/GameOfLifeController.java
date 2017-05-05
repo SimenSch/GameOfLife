@@ -90,6 +90,31 @@ public class GameOfLifeController implements Initializable {
     public void setCellSize(int cellSize) {
         this.cellSize = cellSize;
     }
+    public void setNormalScreen(){
+        canvas.setWidth(957.0);
+        canvas.setHeight(757.0);
+        canvasBack.setWidth(957.0);
+        canvasBack.setHeight(757.0);
+
+        clearGrid();
+        drawGrid();
+        dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
+        //newArray();
+    }
+    public void setFullscreen(){
+        Stage stage = (Stage) aPane.getScene().getWindow();
+        double canvasHeight = stage.getHeight();
+        double canvasWidth = stage.getWidth();
+        canvas.setWidth((canvasWidth));
+        canvas.setHeight(canvasHeight);
+        canvasBack.setWidth(canvasWidth);
+        canvasBack.setHeight(canvasHeight);
+
+        clearGrid();
+        drawGrid();
+        dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
+        dynamicBoard.addRowBottom();
+    }
 
 
     @Override
@@ -141,15 +166,8 @@ public class GameOfLifeController implements Initializable {
                 regButtonClick();
                 Stage stage = (Stage) aPane.getScene().getWindow();
                 stage.setMaximized(true);
-                canvas.setWidth(2560);
-                canvas.setHeight(1440);
-                canvasBack.setWidth(2560);
-                canvasBack.setHeight(1440);
+                setFullscreen();
 
-                clearGrid();
-                drawGrid();
-                dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
-                //newArray();
             }
         });
 
@@ -159,6 +177,7 @@ public class GameOfLifeController implements Initializable {
                 regButtonClick();
                 Stage stage = (Stage) aPane.getScene().getWindow();
                 stage.setMaximized(false);
+                setNormalScreen();
             }
         });
                 /* Color Menu */

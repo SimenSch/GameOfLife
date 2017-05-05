@@ -24,30 +24,53 @@ public class DynamicBoard {
         }
     }
 
-        public void fullscreenExpand(int x,int y) throws NullPointerException{
+        public void fullscreenExpand(int x,int y) throws NullPointerException {
 
             System.out.println(x);
 
 
             System.out.println(y);
             for (int i = 0; i < x; i++) {
+
                 ArrayList<Integer> temp = new ArrayList<>();
                 for (int j = 0; j < y; j++) {
                     temp.add(0);
+                    dynoBoard.get(dynoBoard.size()-1).add(j, 0);
                 }
+                dynoBoard.get(i).add(0);
                 dynoBoard.add(temp);
-
             }
+
+                for (int j = 0; j < x; j++) {
+
+                    dynoBoard.get(j).add(0);
+
+                }
+
+
+
         }
 
+
+    /**
+     * Adds an empty column to the right of the board
+     */
+    /**
+     * Adds an empty row to the bottom of the board
+     */
+    public void addRowBottom(){
+        ArrayList<Integer> emptyRow = new ArrayList<>();
+        for(int i = 0; i < dynoBoard.get(0).size(); i++){
+            emptyRow.add(0);
+        }
+        dynoBoard.add(emptyRow);
+    }
 
         public void expand(int x, int y) {
             for (int i = 0; i < x; i++) {
                 if (dynoBoard.get(i).get(0) == 1) {
 
-                    for (int j = 0; j < x; j++) {
-                        dynoBoard.get(x).add(0, 0);
-                    }
+
                 }
                 if (dynoBoard.get(i).get(y - 1) == 1) {
 
