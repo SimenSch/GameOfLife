@@ -17,11 +17,9 @@ public class DynamicBoard {
 
         for (int i = 0; i < x; i++) {
             ArrayList<Integer> temp = new ArrayList<>();
-
             for (int j = 0; j < y; j++) {
                 temp.add(0);
             }
-
             dynoBoard.add(temp);
         }
     }
@@ -56,30 +54,26 @@ public class DynamicBoard {
 
 
 
-    protected void nextDynoGeneration(int x, int y) {
-         ArrayList<ArrayList<Integer>> nextDynoBoard = new ArrayList<>();
+    protected void nextDynoGeneration() {
+         int x = dynoBoard.size();
+         int y = dynoBoard.get(0).size();
+        ArrayList<ArrayList<Integer>> nextDynoBoard = new ArrayList<>();
+
         for (int i = 0; i < x; i++) {
-            ArrayList<Integer> temp = new ArrayList<>();
-
+            nextDynoBoard.add(new ArrayList(x));
             for (int j = 0; j < y; j++) {
-                temp.add(0);
-            }
+                // add cell even if dead
+                 int val = rules(dynoBoard.get(i).get(j) , countNeightbours(i, j), ruleSet);
 
-            nextDynoBoard.add(temp);
-        }
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                if (rules(dynoBoard.get(i).get(j) , countNeightbours(i, j), ruleSet) == 1) {
 
-                    nextDynoBoard.get(i).set(j, 1);
-
+                   nextDynoBoard.get(i).add(val);
                 }
-
             }
-
+            dynoBoard.addAll(nextDynoBoard);
         }
-        dynoBoard = nextDynoBoard;
-    }
+
+
+
 
     private int rules(int alive, int connector, String ruleSet) {
 
