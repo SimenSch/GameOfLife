@@ -67,12 +67,12 @@ public class DynamicBoard {
 
             nextDynoBoard.add(temp);
         }
-        for (int i = 1; i < x; i++) {
-            for (int j = 1; j < y; j++) {
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
                 if (rules(dynoBoard.get(i).get(j) , countNeightbours(i, j), ruleSet) == 1) {
 
                     nextDynoBoard.get(i).set(j, 1);
-                    System.out.println(nextDynoBoard.get(i).get(j));
+
                 }
 
             }
@@ -150,7 +150,7 @@ public class DynamicBoard {
             }
         }
 */
-        if (i > 0 && j > 0 && i < glc.x -1 && j < glc.y -1) {
+        if (i > 1 && j > 1 && i < glc.x -1 && j < glc.y -1) {
 
             if (dynoBoard.get(i - 1).get(j) == 1) {
                 connector++;
