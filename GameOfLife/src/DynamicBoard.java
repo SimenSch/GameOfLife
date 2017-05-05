@@ -24,9 +24,12 @@ public class DynamicBoard {
         }
     }
 
-        public void fullscreenExpand() {
-            int x = (int) glc.canvas.getWidth() / glc.cellSize;
-            int y = (int) glc.canvas.getHeight() / glc.cellSize;
+        public void fullscreenExpand(int x,int y) throws NullPointerException{
+
+            System.out.println(x);
+
+
+            System.out.println(y);
             for (int i = 0; i < x; i++) {
                 ArrayList<Integer> temp = new ArrayList<>();
                 for (int j = 0; j < y; j++) {
@@ -47,10 +50,12 @@ public class DynamicBoard {
                     }
                 }
                 if (dynoBoard.get(i).get(y - 1) == 1) {
+
                     for (int j = 0; j < x; j++) {
                         dynoBoard.get(x).add(0);
                     }
                 }
+
             }
 
         }

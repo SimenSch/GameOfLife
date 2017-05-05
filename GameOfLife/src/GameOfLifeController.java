@@ -96,7 +96,7 @@ public class GameOfLifeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         x = (int) canvas.getWidth() / cellSize;
         y = (int) canvas.getHeight() / cellSize;
-        dynamicBoard = new DynamicBoard(x, y);
+        dynamicBoard = new DynamicBoard((int)canvas.getWidth()/cellSize,(int)canvas.getHeight()/cellSize);
         //rule = new Rules(this);
         glc = new GameOfLifeController();
         main = new GolSSCG();
@@ -137,7 +137,7 @@ public class GameOfLifeController implements Initializable {
 
         fullScreen.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(ActionEvent event) throws NullPointerException{
                 regButtonClick();
                 Stage stage = (Stage) aPane.getScene().getWindow();
                 stage.setMaximized(true);
@@ -145,9 +145,10 @@ public class GameOfLifeController implements Initializable {
                 canvas.setHeight(1440);
                 canvasBack.setWidth(2560);
                 canvasBack.setHeight(1440);
-                dynamicBoard.fullscreenExpand();
+
                 clearGrid();
                 drawGrid();
+                dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
                 //newArray();
             }
         });
@@ -197,7 +198,7 @@ public class GameOfLifeController implements Initializable {
 
         canvasBack.setOnMouseClicked(new EventHandler<MouseEvent>()  {
             @Override
-            public void handle(MouseEvent event) throws IndexOutOfBoundsException{
+            public void handle(MouseEvent event) throws IndexOutOfBoundsException, NullPointerException{
                 int x1 = (int) event.getX() / cellSize;
                 int y1 = (int) event.getY() / cellSize;
 
@@ -207,9 +208,9 @@ public class GameOfLifeController implements Initializable {
                     gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
                 }
 
-                else if(x1 >= dynamicBoard.dynoBoard.size() || y1 >= dynamicBoard.dynoBoard.get(0).size()){
+                else if(x1 == dynamicBoard.dynoBoard.size() || y1 == dynamicBoard.dynoBoard.get(0).size()){
                     System.out.println("expand board");
-                    dynamicBoard.expand(x1, y1);
+                    dynamicBoard.expand(x1,y1);
                     System.out.println(dynamicBoard.dynoBoard.get(x1).get(y1));
                     gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
                 }
