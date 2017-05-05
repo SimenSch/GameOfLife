@@ -68,16 +68,13 @@ public class GameOfLifeController implements Initializable {
     public boolean runner;
     public boolean musc;
     public boolean set;
-
+    boolean soundIsMuted = false;
     public GraphicsContext gc;
     public GraphicsContext gc2;
     public GraphicsContext fileGc;
     public Filehandler fh;
     public int x;
     public int y;
-
-
-
     public int cellSize =10;
     // public byte[][] grid;
     public Filehandler saveAFile;
@@ -88,11 +85,8 @@ public class GameOfLifeController implements Initializable {
     GameOfLifeController glc;
     public DynamicBoard dynamicBoard;
     Timeline tLine;
-
     public GameOfLifeController() {
     }
-
-
     public void setCellSize(int cellSize) {
         this.cellSize = cellSize;
     }
@@ -100,21 +94,15 @@ public class GameOfLifeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         x = (int) canvas.getWidth() / cellSize;
         y = (int) canvas.getHeight() / cellSize;
         dynamicBoard = new DynamicBoard(x, y);
-
         //rule = new Rules(this);
         glc = new GameOfLifeController();
         main = new GolSSCG();
         fh = new Filehandler();
-
         dynamicBoard.setRuleSet("regular");
-
         //grid = new byte[x][y];
-
-
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.ORANGE);
         gc2 = canvasBack.getGraphicsContext2D();
@@ -392,23 +380,16 @@ public class GameOfLifeController implements Initializable {
 
     }
 
-    public void playSound() { //Prototype
-        musc = true;
-        String musicFile = "GameOfLife/src/Sounds/Mario.mp3";
-        Media sound = new Media(new File(musicFile).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        if ("Play".equals(mPlay.getText())) {
-            startButtonClick();
-            mPlay.setText("Mute");
-            mediaPlayer.play();
-        } else if ("Mute".equals(mPlay.getText())) {
-            pauseButtonClick();
-            mPlay.setText("Play");
-            mediaPlayer.stop();
-        } else {
-            mediaPlayer.stop();
+    public void playSound() {
+        if(soundIsMuted) {
+            backgroundClick.setVolume(1);
+        }else{
+            backgroundClick.setVolume(0);
         }
+        soundIsMuted =! soundIsMuted;
     }
+
+
 
 
     @FXML
@@ -464,25 +445,25 @@ public class GameOfLifeController implements Initializable {
     @FXML
     public void RadioButtons(ActionEvent event) {
         if (small.isSelected()) {
-            setCellSize(5);
+            setCellSize(3);
             tinyButtonClick();
         } else if (normal.isSelected()) {
-            setCellSize(10);
+            setCellSize(5);
             tinyButtonClick();
 
         } else if (large.isSelected()) {
-            setCellSize(20);
+            setCellSize(10);
             tinyButtonClick();
 
         } else if (large2.isSelected()) {
-            setCellSize(30);
+            setCellSize(20);
             tinyButtonClick();
 
         } else if (large3.isSelected()) {
-            setCellSize(40);
+            setCellSize(30);
             tinyButtonClick();
         } else {
-            setCellSize(50);
+            setCellSize(40);
             tinyButtonClick();
 
         }

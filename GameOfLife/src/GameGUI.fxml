@@ -4,7 +4,6 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -20,207 +19,164 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="aPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="779.0" prefWidth="951.0" style="-fx-background-color: #617073;" stylesheets="@style2.css"
-            xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="GameOfLifeController">
+<AnchorPane fx:id="aPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="779.0" prefWidth="951.0" style="-fx-background-color: #617073;" stylesheets="@style2.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameOfLifeController">
     <children>
-        <Canvas fx:id="canvas" height="757.0" layoutY="27.0" width="957.0"/>
-        <Canvas fx:id="canvasBack" height="757.0" layoutY="27.0" width="957.0" AnchorPane.bottomAnchor="-5.0"
-                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0"/>
-        <MenuBar fx:id="modBar" layoutY="2.0" prefHeight="25.0" prefWidth="951.0" style="-fx-background-color: #1E2425;"
-                 stylesheets="@style.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                 AnchorPane.topAnchor="2.0">
+        <Canvas fx:id="canvas" height="757.0" layoutY="27.0" width="957.0" />
+        <Canvas fx:id="canvasBack" height="757.0" layoutY="27.0" width="957.0" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0" />
+        <MenuBar fx:id="modBar" layoutY="2.0" prefHeight="25.0" prefWidth="951.0" style="-fx-background-color: #1E2425;" stylesheets="@style.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
             <menus>
                 <Menu fx:id="modItemFile" mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#openFile" text="Filbehandler"/>
+                        <MenuItem mnemonicParsing="false" onAction="#openFile" text="Filbehandler" />
                     </items>
                 </Menu>
                 <Menu id="modItem" mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#openMenu" text="Settings"/>
+                        <MenuItem mnemonicParsing="false" onAction="#openMenu" text="Settings" />
                     </items>
                 </Menu>
                 <Menu id="modItem" mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About"/>
+                        <MenuItem mnemonicParsing="false" text="About" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
-        <Pane fx:id="nedeBtn" layoutX="-6.0" layoutY="753.0" prefHeight="32.0" prefWidth="957.0"
-              style="-fx-background-color: #1E2425;" AnchorPane.bottomAnchor="-6.0" AnchorPane.leftAnchor="-6.0"
-              AnchorPane.rightAnchor="0.0">
+        <Pane fx:id="nedeBtn" layoutX="-6.0" layoutY="753.0" prefHeight="32.0" prefWidth="957.0" style="-fx-background-color: #1E2425;" AnchorPane.bottomAnchor="-6.0" AnchorPane.leftAnchor="-6.0" AnchorPane.rightAnchor="0.0">
             <children>
                 <ButtonBar prefHeight="40.0" prefWidth="200.0">
                     <buttons>
-                        <Button fx:id="start" mnemonicParsing="false" onAction="#start" prefHeight="25.0"
-                                prefWidth="113.0" text="Start"/>
-                        <Button fx:id="clear" mnemonicParsing="false" onAction="#reset" prefHeight="25.0"
-                                prefWidth="101.0" text="Clear"/>
+                        <Button fx:id="start" mnemonicParsing="false" onAction="#start" prefHeight="25.0" prefWidth="113.0" text="Start" />
+                        <Button fx:id="clear" mnemonicParsing="false" onAction="#reset" prefHeight="25.0" prefWidth="101.0" text="Clear" />
                     </buttons>
                     <padding>
-                        <Insets bottom="12.0" left="-5.0"/>
+                        <Insets bottom="12.0" left="-5.0" />
                     </padding>
                 </ButtonBar>
             </children>
         </Pane>
-        <Rectangle fx:id="blur" arcHeight="5.0" arcWidth="5.0" fill="#262728b2" height="2000" layoutY="27.0"
-                   stroke="BLACK" strokeType="INSIDE" visible="false" width="3000" AnchorPane.bottomAnchor="24.0"
-                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0"/>
-        <Pane fx:id="menu" layoutY="27.0" managed="true" prefHeight="713.0" prefWidth="172.0" visible="true"
-              AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="27.0">
+        <Rectangle fx:id="blur" arcHeight="5.0" arcWidth="5.0" fill="#262728b2" height="2000" layoutY="27.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="3000" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0" />
+        <Pane fx:id="menu" layoutY="27.0" managed="true" prefHeight="713.0" prefWidth="172.0" visible="true" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="27.0">
             <children>
-                <Rectangle fx:id="rec" arcHeight="5.0" arcWidth="5.0" fill="#1e2425" height="712.0" stroke="#1e2425"
-                           strokeType="INSIDE" width="179.0"/>
-                <Button layoutX="36.0" layoutY="658.0" mnemonicParsing="false" onAction="#Apply" prefHeight="25.0"
-                        prefWidth="109.0" text="Lukk Settings">
+                <Rectangle fx:id="rec" arcHeight="5.0" arcWidth="5.0" fill="#1e2425" height="712.0" stroke="#1e2425" strokeType="INSIDE" width="179.0" />
+                <Button layoutX="36.0" layoutY="658.0" mnemonicParsing="false" onAction="#Apply" prefHeight="25.0" prefWidth="109.0" text="Lukk Settings">
                     <font>
-                        <Font name="System Bold" size="14.0"/>
+                        <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
                 <MenuButton fx:id="setTheme" layoutX="37.0" layoutY="609.0" mnemonicParsing="false" text="Choose theme">
                     <items>
-                        <RadioMenuItem fx:id="Orange" mnemonicParsing="false" selected="true" text="Orange Dream"
-                                       toggleGroup="$color" userData="Orange">
+                        <RadioMenuItem fx:id="Orange" mnemonicParsing="false" selected="true" text="Orange Dream" toggleGroup="$color" userData="Orange">
                             <toggleGroup>
-                                <ToggleGroup fx:id="color"/>
+                                <ToggleGroup fx:id="color" />
                             </toggleGroup>
                         </RadioMenuItem>
-                        <RadioMenuItem fx:id="BW" mnemonicParsing="false" text="Black &amp; White" toggleGroup="$color"
-                                       userData="BW"/>
+                        <RadioMenuItem fx:id="BW" mnemonicParsing="false" text="Black &amp; White" toggleGroup="$color" userData="BW" />
                     </items>
                 </MenuButton>
                 <Label layoutX="47.0" layoutY="577.0" text="Color Theme" textFill="WHITE">
                     <font>
-                        <Font size="15.0"/>
+                        <Font size="15.0" />
                     </font>
                 </Label>
                 <Label layoutX="47.0" layoutY="509.0" text="Window Size" textFill="WHITE">
                     <font>
-                        <Font size="15.0"/>
+                        <Font size="15.0" />
                     </font>
                 </Label>
-                <MenuButton fx:id="setSize" layoutX="40.0" layoutY="542.0" mnemonicParsing="false" prefHeight="25.0"
-                            prefWidth="109.0" text="Choose Size">
+                <MenuButton fx:id="setSize" layoutX="40.0" layoutY="542.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Choose Size">
                     <items>
-                        <RadioMenuItem fx:id="NormalWindow" mnemonicParsing="false" selected="true" text="Normal"
-                                       toggleGroup="$choosesize" userData="NormalWindow">
+                        <RadioMenuItem fx:id="NormalWindow" mnemonicParsing="false" selected="true" text="Normal" toggleGroup="$choosesize" userData="NormalWindow">
                             <toggleGroup>
-                                <ToggleGroup fx:id="choosesize"/>
+                                <ToggleGroup fx:id="choosesize" />
                             </toggleGroup>
                         </RadioMenuItem>
-                        <RadioMenuItem fx:id="fullScreen" mnemonicParsing="false" text="Full Screen"
-                                       toggleGroup="$choosesize" userData="fullscreen"/>
+                        <RadioMenuItem fx:id="fullScreen" mnemonicParsing="false" text="Full Screen" toggleGroup="$choosesize" userData="fullscreen" />
                     </items>
                 </MenuButton>
                 <Label layoutX="68.0" layoutY="451.0" text="Speed" textFill="WHITE">
                     <font>
-                        <Font size="15.0"/>
+                        <Font size="15.0" />
                     </font>
                 </Label>
                 <Label layoutX="56.0" layoutY="119.0" text="Grid Size" textFill="WHITE">
                     <font>
-                        <Font size="15.0"/>
+                        <Font size="15.0" />
                     </font>
                 </Label>
-                <RadioButton fx:id="small" layoutX="20.0" layoutY="172.0" mnemonicParsing="false"
-                             onAction="#RadioButtons">
+                <RadioButton fx:id="small" layoutX="20.0" layoutY="172.0" mnemonicParsing="false" onAction="#RadioButtons">
                     <toggleGroup>
-                        <ToggleGroup fx:id="Size"/>
+                        <ToggleGroup fx:id="Size" />
                     </toggleGroup>
                 </RadioButton>
-                <RadioButton fx:id="normal" layoutX="46.0" layoutY="172.0" mnemonicParsing="false"
-                             onAction="#RadioButtons" toggleGroup="$Size"/>
-                <RadioButton fx:id="large" layoutX="73.0" layoutY="172.0" mnemonicParsing="false"
-                             onAction="#RadioButtons" toggleGroup="$Size"/>
-                <Label layoutX="24.0" layoutY="155.0" text="3" textFill="WHITE"/>
-                <Label layoutX="50.0" layoutY="155.0" text="5" textFill="WHITE"/>
-                <Label layoutX="77.0" layoutY="155.0" text="10" textFill="WHITE"/>
-                <Slider fx:id="zSlider" layoutX="20.0" layoutY="483.0" max="500.0" min="20.0"
-                        nodeOrientation="RIGHT_TO_LEFT" value="100.0"/>
-                <RadioButton fx:id="large2" layoutX="97.0" layoutY="172.0" mnemonicParsing="false"
-                             onAction="#RadioButtons" selected="true" toggleGroup="$Size"/>
-                <RadioButton fx:id="large3" layoutX="123.0" layoutY="172.0" mnemonicParsing="false"
-                             onAction="#RadioButtons" toggleGroup="$Size"/>
-                <RadioButton fx:id="large4" layoutX="148.0" layoutY="172.0" mnemonicParsing="false"
-                             onAction="#RadioButtons" toggleGroup="$Size"/>
-                <Label layoutX="101.0" layoutY="155.0" text="20" textFill="WHITE"/>
-                <Label layoutX="127.0" layoutY="155.0" text="30" textFill="WHITE"/>
-                <Label layoutX="152.0" layoutY="155.0" text="40" textFill="WHITE"/>
+                <RadioButton fx:id="normal" layoutX="46.0" layoutY="172.0" mnemonicParsing="false" onAction="#RadioButtons" toggleGroup="$Size" />
+                <RadioButton fx:id="large" layoutX="73.0" layoutY="172.0" mnemonicParsing="false" onAction="#RadioButtons" toggleGroup="$Size" />
+                <Label layoutX="24.0" layoutY="155.0" text="3" textFill="WHITE" />
+                <Label layoutX="50.0" layoutY="155.0" text="5" textFill="WHITE" />
+                <Label layoutX="77.0" layoutY="155.0" text="10" textFill="WHITE" />
+                <Slider fx:id="zSlider" layoutX="20.0" layoutY="483.0" max="500.0" min="20.0" nodeOrientation="RIGHT_TO_LEFT" value="100.0" />
+                <RadioButton fx:id="large2" layoutX="97.0" layoutY="172.0" mnemonicParsing="false" onAction="#RadioButtons" selected="true" toggleGroup="$Size" />
+                <RadioButton fx:id="large3" layoutX="123.0" layoutY="172.0" mnemonicParsing="false" onAction="#RadioButtons" toggleGroup="$Size" />
+                <RadioButton fx:id="large4" layoutX="148.0" layoutY="172.0" mnemonicParsing="false" onAction="#RadioButtons" toggleGroup="$Size" />
+                <Label layoutX="101.0" layoutY="155.0" text="20" textFill="WHITE" />
+                <Label layoutX="127.0" layoutY="155.0" text="30" textFill="WHITE" />
+                <Label layoutX="152.0" layoutY="155.0" text="40" textFill="WHITE" />
                 <Label layoutX="72.0" layoutY="386.0" text="Music" textFill="WHITE">
                     <font>
-                        <Font size="15.0"/>
+                        <Font size="15.0" />
                     </font>
                 </Label>
-                <Button fx:id="mPlay" layoutX="35.0" layoutY="415.0" mnemonicParsing="false" onAction="#playSound"
-                        prefHeight="25.0" prefWidth="109.0" text="Mute"/>
-                <MenuButton layoutX="34.0" layoutY="344.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0"
-                            text="Choose Rules">
+                <Button fx:id="mPlay" layoutX="35.0" layoutY="415.0" mnemonicParsing="false" onAction="#playSound" prefHeight="25.0" prefWidth="109.0" text="Mute" />
+                <MenuButton layoutX="34.0" layoutY="344.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Choose Rules">
                     <items>
-                        <RadioMenuItem fx:id="rule1" mnemonicParsing="false" selected="true" text="Conway's Life"
-                                       toggleGroup="$rulegroup">
+                        <RadioMenuItem fx:id="rule1" mnemonicParsing="false" selected="true" text="Conway's Life" toggleGroup="$rulegroup">
                             <toggleGroup>
-                                <ToggleGroup fx:id="rulegroup"/>
+                                <ToggleGroup fx:id="rulegroup" />
                             </toggleGroup>
                         </RadioMenuItem>
-                        <RadioMenuItem fx:id="rule2" mnemonicParsing="false" text="Life without Death"
-                                       toggleGroup="$rulegroup"/>
+                        <RadioMenuItem fx:id="rule2" mnemonicParsing="false" text="Life without Death" toggleGroup="$rulegroup" />
                     </items>
                 </MenuButton>
                 <MenuButton layoutX="36.0" layoutY="273.0" mnemonicParsing="false" text="Choose Board">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Regular"/>
-                        <MenuItem mnemonicParsing="false" text="Dynamic"/>
+                        <MenuItem mnemonicParsing="false" text="Regular" />
+                        <MenuItem mnemonicParsing="false" text="Dynamic" />
                     </items>
                 </MenuButton>
                 <Label layoutX="42.0" layoutY="241.0" text="Choose Board" textFill="WHITE">
                     <font>
-                        <Font size="15.0"/>
+                        <Font size="15.0" />
                     </font>
                 </Label>
                 <Label layoutX="42.0" layoutY="310.0" text="Choose Rules" textFill="WHITE">
                     <font>
-                        <Font size="15.0"/>
+                        <Font size="15.0" />
                     </font>
                 </Label>
-                <Label layoutX="51.0" layoutY="202.0" text="Show Grid" textFill="WHITE">
-                    <font>
-                        <Font size="15.0"/>
-                    </font>
-                </Label>
-                <CheckBox layoutX="135.0" layoutY="204.0" mnemonicParsing="false" selected="true"/>
             </children>
         </Pane>
-        <Pane fx:id="menuFile" layoutX="180.0" layoutY="178.0" prefHeight="455.0" prefWidth="608.0"
-              style="-fx-background-color: #1e2425;">
+        <Pane fx:id="menuFile" layoutX="180.0" layoutY="178.0" prefHeight="455.0" prefWidth="608.0" style="-fx-background-color: #1e2425;">
             <children>
                 <Label layoutX="211.0" layoutY="6.0" text="Filbehandler" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="32.0"/>
+                        <Font name="System Bold" size="32.0" />
                     </font>
                 </Label>
-                <Button layoutX="14.0" layoutY="150.0" mnemonicParsing="false" onAction="#fileImport" prefHeight="25.0"
-                        prefWidth="121.0" text="Import"/>
-                <Button layoutX="14.0" layoutY="101.0" mnemonicParsing="false" onAction="#Save" prefHeight="25.0"
-                        prefWidth="121.0" text="Export"/>
-                <Pane layoutX="143.0" layoutY="53.0" prefHeight="388.0" prefWidth="455.0"
-                      style="-fx-background-color: white;">
+                <Button layoutX="14.0" layoutY="150.0" mnemonicParsing="false" onAction="#fileImport" prefHeight="25.0" prefWidth="121.0" text="Import" />
+                <Button layoutX="14.0" layoutY="101.0" mnemonicParsing="false" onAction="#Save" prefHeight="25.0" prefWidth="121.0" text="Export" />
+                <Pane layoutX="143.0" layoutY="53.0" prefHeight="388.0" prefWidth="455.0" style="-fx-background-color: white;">
                     <children>
-                        <Canvas fx:id="fileCanvas" height="388.0" width="455.0"/>
+                        <Canvas fx:id="fileCanvas" height="388.0" width="455.0" />
                         <Label layoutX="180.0" layoutY="14.0" text="Preview Pattern" underline="true">
                             <font>
-                                <Font name="System Italic" size="15.0"/>
+                                <Font name="System Italic" size="15.0" />
                             </font>
                         </Label>
                     </children>
                 </Pane>
-                <TextField layoutX="14.0" layoutY="215.0" prefHeight="25.0" prefWidth="95.0" promptText="URL..."/>
-                <Button layoutX="109.0" layoutY="215.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="32.0"
-                        text="Ok"/>
-                <Button layoutX="14.0" layoutY="404.0" mnemonicParsing="false" onAction="#closeFile" prefHeight="25.0"
-                        prefWidth="121.0" text="Lukk filbehandler"/>
+                <TextField layoutX="14.0" layoutY="215.0" prefHeight="25.0" prefWidth="95.0" promptText="URL..." />
+                <Button layoutX="109.0" layoutY="215.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="32.0" text="Ok" />
+                <Button layoutX="14.0" layoutY="404.0" mnemonicParsing="false" onAction="#closeFile" prefHeight="25.0" prefWidth="121.0" text="Lukk filbehandler" />
             </children>
         </Pane>
     </children>
