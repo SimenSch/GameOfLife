@@ -467,24 +467,33 @@ public class GameOfLifeController implements Initializable {
         if (small.isSelected()) {
             setCellSize(3);
             tinyButtonClick();
+            dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
+            dynamicBoard.addRowBottom();
         } else if (normal.isSelected()) {
             setCellSize(5);
             tinyButtonClick();
-
+            dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
+            dynamicBoard.addRowBottom();
         } else if (large.isSelected()) {
             setCellSize(10);
             tinyButtonClick();
-
+            dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
+            dynamicBoard.addRowBottom();
         } else if (large2.isSelected()) {
             setCellSize(20);
             tinyButtonClick();
-
+            dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
+            dynamicBoard.addRowBottom();
         } else if (large3.isSelected()) {
             setCellSize(30);
             tinyButtonClick();
+            dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
+            dynamicBoard.addRowBottom();
         } else {
             setCellSize(40);
             tinyButtonClick();
+            dynamicBoard.fullscreenExpand((int)canvas.getHeight()/cellSize,(int)canvas.getWidth()/cellSize);
+            dynamicBoard.addRowBottom();
 
         }
         clearGrid();
