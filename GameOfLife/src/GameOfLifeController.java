@@ -1,5 +1,9 @@
 
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.FileReader;
@@ -25,8 +30,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 /**
  * @author Simen & Snorre
@@ -59,7 +63,7 @@ public class GameOfLifeController implements Initializable {
 
     private Color[] colors = {Color.RED, Color.ALICEBLUE, Color.BISQUE, Color.MAROON, Color.FIREBRICK, Color.BURLYWOOD, Color.SEAGREEN, Color.CORNSILK,};
     private Color blue = Color.BLUEVIOLET;
-    public int intervalPeriod;
+    public int msTime;
     public boolean runner;
     public boolean musc;
     public boolean set;
@@ -71,15 +75,15 @@ public class GameOfLifeController implements Initializable {
     public int x;
     public int y;
     public int cellSize;
-   // public byte[][] grid;
+    // public byte[][] grid;
     public Filehandler saveAFile;
     public String background = "GameOfLife/src/Sounds/epic menu music.Wav";
     public Media backgroundSound = new Media(new File(background).toURI().toString());
     public MediaPlayer backgroundClick = new MediaPlayer(backgroundSound);
-    Timer timer;
     GolSSCG main;
     GameOfLifeController glc;
     public DynamicBoard dynamicBoard;
+    Timeline tLine;
 
     public GameOfLifeController() {
     }
@@ -106,7 +110,6 @@ public class GameOfLifeController implements Initializable {
         //grid = new byte[x][y];
 
 
-
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.ORANGE);
         gc2 = canvasBack.getGraphicsContext2D();
@@ -115,10 +118,9 @@ public class GameOfLifeController implements Initializable {
         menu.setManaged(false);
         menuFile.setVisible(false);
         menuFile.setManaged(false);
-        intervalPeriod = 100;
+        msTime = 100;
         drawGrid();
         draw();
-
 
 
         System.out.println("Working Directory = " +
@@ -195,23 +197,23 @@ public class GameOfLifeController implements Initializable {
         });
 
         zSlider.valueProperty().addListener((ov, old_val, new_val) -> {
-            intervalPeriod = new_val.intValue();
+            msTime = new_val.intValue();
         });
 
 
         canvasBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                int x1 = (int)event.getX() / cellSize;
-                int y1 = (int)event.getY() / cellSize;
-                if(x1<dynamicBoard.dynoBoard.size() && y1< dynamicBoard.dynoBoard.get(1).size()){
+                int x1 = (int) event.getX() / cellSize;
+                int y1 = (int) event.getY() / cellSize;
+                if (x1 < dynamicBoard.dynoBoard.size() && y1 < dynamicBoard.dynoBoard.get(1).size()) {
                     dynamicBoard.dynoBoard.get(x1).set(y1, 1);
                 }
 
                 gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
             }
         });
-        canvasBack.setOnMouseDragged(new EventHandler<MouseEvent>()  {
+        canvasBack.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 int x1 = (int) event.getX() / cellSize;
@@ -228,42 +230,37 @@ public class GameOfLifeController implements Initializable {
 
     @FXML
     public void start() {
-
-
         if ("Start".equals(start.getText())) {
             startButtonClick();
-            if (timer != null) {
-                timer.cancel();
-                timer.purge();
-            }
             runner = true;
-            Timer timer = new Timer();
-            TimerTask task = new TimerTask() {
-                @Override
-                public void run() {
-                    if (runner) {
-                        backgroundClick.play();
-                        long start = System.currentTimeMillis();
-                        dynamicBoard.nextDynoGeneration(x, y);
-                        clearCanvas();
-                        draw();
-                        long elapsed = System.currentTimeMillis() - start;
-                        System.out.println("Time between frames (ms): " + elapsed); //it changes alot, this it's because the sound?
-                    } else {
-                        timer.cancel();
-                        timer.purge();
-                        backgroundClick.stop();
-                    }
+            if (tLine != null) {
+                tLine.stop();
+            }
+            tLine = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+                if (runner) {
+                    backgroundClick.play();
+                    long start = System.currentTimeMillis();
+                    dynamicBoard.nextDynoGeneration(x, y);
+                    clearCanvas();
+                    draw();
+                    long elapsed = System.currentTimeMillis() - start;
+                    System.out.println("Time between frames (ms): " + elapsed);
+                } else {
+                    tLine.stop();
+                    backgroundClick.stop();
                 }
-            };
-            int waitSecounds = 0;
-            timer.scheduleAtFixedRate(task, waitSecounds, intervalPeriod);
+            }));
+
+            tLine.setCycleCount(Animation.INDEFINITE);
+            tLine.play();
             start.setText("Pause");
-        } else {
-            pauseButtonClick();
-            start.setText("Start");
-            runner = false;
         }
+        else{
+        pauseButtonClick();
+        start.setText("Start");
+        runner = false;
+        }
+
     }
 
 
@@ -379,10 +376,6 @@ public class GameOfLifeController implements Initializable {
         buttonClick.play();
 
 
-
-
-
-
     }
 
     public void playSound() { //Prototype
@@ -412,11 +405,11 @@ public class GameOfLifeController implements Initializable {
         if (file != null) {
             FileReader fileReader = new FileReader(file);
             newArray();
-            if(file.getName().endsWith(".txt")) {
+            if (file.getName().endsWith(".txt")) {
                 dynamicBoard.dynoBoard = fh.goThroughFile(fileReader, dynamicBoard.dynoBoard);
                 showPreviewPattern(dynamicBoard.dynoBoard);
                 clearCanvas();
-            }else if(file.getName().endsWith(".rle")){
+            } else if (file.getName().endsWith(".rle")) {
                 dynamicBoard.dynoBoard = fh.readRleFile(fileReader, dynamicBoard.dynoBoard);
                 showPreviewPattern(dynamicBoard.dynoBoard);
                 clearCanvas();
