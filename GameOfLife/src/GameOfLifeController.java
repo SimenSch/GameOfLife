@@ -99,7 +99,7 @@ public class GameOfLifeController implements Initializable {
         x = (int) canvas.getWidth() / cellSize;
         y = (int) canvas.getHeight() / cellSize;
         dynamicBoard = new DynamicBoard(x, y);
-        System.out.println(dynamicBoard.dynoBoard.get(1).get(1));
+
         //rule = new Rules(this);
         glc = new GameOfLifeController();
         main = new GolSSCG();
@@ -206,7 +206,7 @@ public class GameOfLifeController implements Initializable {
             public void handle(MouseEvent event) {
                 int x1 = (int) event.getX() / cellSize;
                 int y1 = (int) event.getY() / cellSize;
-                if (x1 < dynamicBoard.dynoBoard.size() && y1 < dynamicBoard.dynoBoard.get(1).size()) {
+                if (x1 < dynamicBoard.dynoBoard.size() && y1 < dynamicBoard.dynoBoard.get(0).size()) {
                     dynamicBoard.dynoBoard.get(x1).set(y1, 1);
                 }
 
@@ -218,7 +218,7 @@ public class GameOfLifeController implements Initializable {
             public void handle(MouseEvent event) {
                 int x1 = (int) event.getX() / cellSize;
                 int y1 = (int) event.getY() / cellSize;
-                if (y1 < dynamicBoard.dynoBoard.get(1).size() && x1 < dynamicBoard.dynoBoard.size() && y1 >= 0 && x1 >= 0) {
+                if (y1 < dynamicBoard.dynoBoard.get(0).size() && x1 < dynamicBoard.dynoBoard.size() && y1 >= 0 && x1 >= 0) {
                     if (dynamicBoard.dynoBoard.get(x1).get(y1) == 0) {
                         dynamicBoard.dynoBoard.get(x1).set(y1, 1);
                         gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);

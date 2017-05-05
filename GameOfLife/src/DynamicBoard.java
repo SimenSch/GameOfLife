@@ -69,8 +69,9 @@ public class DynamicBoard {
                    nextDynoBoard.get(i).add(val);
                 }
             }
-            dynoBoard.addAll(nextDynoBoard);
-        }
+
+             dynoBoard = nextDynoBoard;
+    }
 
 
 
@@ -144,7 +145,7 @@ public class DynamicBoard {
             }
         }
 */
-        if (i > 1 && j > 1 && i < glc.x -1 && j < glc.y -1) {
+        if (i > 1 && j > 1 && i < dynoBoard.size() -1 && j < dynoBoard.get(0).size() -1) {
 
             if (dynoBoard.get(i - 1).get(j) == 1) {
                 connector++;
@@ -171,10 +172,10 @@ public class DynamicBoard {
                 connector++;
             }
         }
+
+
         return connector;
 
     }
-    public void DynamicGeneration(){
 
-    }
 }
