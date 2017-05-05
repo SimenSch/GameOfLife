@@ -16,7 +16,7 @@ How to edit settings:
 
 Press the edit button in the menu.
 
-choose which settings you would like.
+choose which settings you would like to change this is explained in game.
 
 
 How to import and export files:
@@ -29,5 +29,5 @@ you can see the preview of the imported file in the filbehandler menu.
 
 choose an URL in the url text field to import anything from the internet.
 
-to export files, simply press import and your drawn file will be in the files folder of in the game directory.
+to export files, simply press import and your drawn file will be in the files folder in the game directory.
 
