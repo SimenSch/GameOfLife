@@ -22,6 +22,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.omg.DynamicAny.DynAnyOperations;
 
 import java.io.File;
 import java.io.FileReader;
@@ -154,7 +155,7 @@ public class GameOfLifeController implements Initializable {
                 canvasBack.setHeight(1440);
                 clearGrid();
                 drawGrid();
-                newArray();
+                //newArray();
             }
         });
 
@@ -201,16 +202,31 @@ public class GameOfLifeController implements Initializable {
         });
 
 
-        canvasBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        canvasBack.setOnMouseClicked(new EventHandler<MouseEvent>()  {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(MouseEvent event) throws IndexOutOfBoundsException{
                 int x1 = (int) event.getX() / cellSize;
                 int y1 = (int) event.getY() / cellSize;
-                if (x1 < dynamicBoard.dynoBoard.size() && y1 < dynamicBoard.dynoBoard.get(0).size()) {
-                    dynamicBoard.dynoBoard.get(x1).set(y1, 1);
-                }
 
-                gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
+                if (x1 < dynamicBoard.dynoBoard.get(0).size() && y1 < dynamicBoard.dynoBoard.size()) {
+                    dynamicBoard.dynoBoard.get(x1).set(y1, 1);
+                    gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
+                }
+                /*
+                else if(x1 >= dynamicBoard.dynoBoard.size() || y1 >= dynamicBoard.dynoBoard.get(0).size()){
+                    System.out.println("Clicked outside Array");
+                    if(x1 >= dynamicBoard.dynoBoard.size()|| y1 >= dynamicBoard.dynoBoard.size()) {
+                        dynamicBoard.dynoBoard.add(new ArrayList<>(dynamicBoard.dynoBoard.get(x1).size()));
+                        dynamicBoard.dynoBoard.get(x1).add(0);
+                        System.out.println("Added 1 row right side");
+                    }
+                    if(y1 >= dynamicBoard.dynoBoard.get(0).size()){
+                        //dynamicBoard.dynoBoard.get(0).add(new ArrayList<Integer>(dynamicBoard.dynoBoard.add(ArrayList<Integer>));
+                        dynamicBoard.dynoBoard.get(y1).add(0);
+                        System.out.println("Added 1 row bottom side");
+                    }
+                }
+                */
             }
         });
         canvasBack.setOnMouseDragged(new EventHandler<MouseEvent>() {
@@ -229,14 +245,14 @@ public class GameOfLifeController implements Initializable {
     }
 
     @FXML
-    public void start() {
+    public void start() throws IndexOutOfBoundsException{
         if ("Start".equals(start.getText())) {
             startButtonClick();
             runner = true;
             if (tLine != null) {
                 tLine.stop();
             }
-            tLine = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            tLine = new Timeline(new KeyFrame(Duration.millis(msTime), event -> {
                 if (runner) {
                     backgroundClick.play();
                     long start = System.currentTimeMillis();
@@ -286,9 +302,9 @@ public class GameOfLifeController implements Initializable {
     }
 
     public void newArray() {
-        x = 5 + (int) canvas.getWidth() / cellSize;
-        y = 5 + (int) canvas.getHeight() / cellSize;
-        dynamicBoard = new DynamicBoard(x, y);
+        x = (int) canvas.getWidth() / cellSize;
+        y = (int) canvas.getHeight() / cellSize;
+
     }
 
     public void reset() {

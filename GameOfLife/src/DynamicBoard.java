@@ -24,7 +24,21 @@ public class DynamicBoard {
         }
     }
 
+        public void fullscreenExpand(){
+            int x = (int) glc.canvas.getWidth() / glc.cellSize;
+            int y = (int) glc.canvas.getHeight() / glc.cellSize;
+            ArrayList<ArrayList<Integer>> nextDynoBoard = new ArrayList<>();
+            for (int i = 0; i < x; i++) {
+                nextDynoBoard.add(new ArrayList(x));
+                for (int j = 0; j < y; j++) {
 
+
+                    nextDynoBoard.get(i).add(0);
+                }
+            }
+            dynoBoard = nextDynoBoard;
+
+        }
 
 
         public void expand(int x, int y) {
@@ -54,29 +68,25 @@ public class DynamicBoard {
 
 
 
-    protected void nextDynoGeneration() {
+    protected void nextDynoGeneration() throws IndexOutOfBoundsException{
          int x = dynoBoard.size();
          int y = dynoBoard.get(0).size();
         ArrayList<ArrayList<Integer>> nextDynoBoard = new ArrayList<>();
-
         for (int i = 0; i < x; i++) {
             nextDynoBoard.add(new ArrayList(x));
             for (int j = 0; j < y; j++) {
                 // add cell even if dead
                  int val = rules(dynoBoard.get(i).get(j) , countNeightbours(i, j), ruleSet);
-
-
                    nextDynoBoard.get(i).add(val);
                 }
             }
-
              dynoBoard = nextDynoBoard;
     }
 
 
 
 
-    private int rules(int alive, int connector, String ruleSet) {
+    private int rules(int alive, int connector, String ruleSet) throws IndexOutOfBoundsException{
 
         switch (ruleSet) {
             case "regular":
@@ -111,7 +121,7 @@ public class DynamicBoard {
     }
 
 
-    protected int countNeightbours(int i, int j) {
+    protected int countNeightbours(int i, int j) throws IndexOutOfBoundsException{
         connector = 0;
 
      /*   if(i==0 && j==0){
