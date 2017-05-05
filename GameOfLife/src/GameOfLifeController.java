@@ -209,25 +209,18 @@ public class GameOfLifeController implements Initializable {
                 int y1 = (int) event.getY() / cellSize;
 
                 if (x1 < dynamicBoard.dynoBoard.get(0).size() && y1 < dynamicBoard.dynoBoard.size()) {
+                    System.out.println("inside board");
                     dynamicBoard.dynoBoard.get(x1).set(y1, 1);
                     gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
                 }
-                /*
+
                 else if(x1 >= dynamicBoard.dynoBoard.size() || y1 >= dynamicBoard.dynoBoard.get(0).size()){
-                    System.out.println("Clicked outside Array");
-                    if(x1 >= dynamicBoard.dynoBoard.size()|| y1 >= dynamicBoard.dynoBoard.size()) {
-                        dynamicBoard.dynoBoard.add(new ArrayList<>(dynamicBoard.dynoBoard.get(x1).size()));
-                        dynamicBoard.dynoBoard.get(x1).add(0);
-                        System.out.println("Added 1 row right side");
-                    }
-                    if(y1 >= dynamicBoard.dynoBoard.get(0).size()){
-                        //dynamicBoard.dynoBoard.get(0).add(new ArrayList<Integer>(dynamicBoard.dynoBoard.add(ArrayList<Integer>));
-                        dynamicBoard.dynoBoard.get(y1).add(0);
-                        System.out.println("Added 1 row bottom side");
-                    }
+                    System.out.println("expand board");
+                    dynamicBoard.expand(x1, y1);
+                    System.out.println(dynamicBoard.dynoBoard.get(x1).get(y1));
+                    gc.fillRect(x1 * cellSize, y1 * cellSize, cellSize, cellSize);
                 }
-                */
-            }
+             }
         });
         canvasBack.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
